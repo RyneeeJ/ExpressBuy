@@ -35,7 +35,10 @@ exports.checkAdminRole = async (req, res, next) => {
     // check if user still exists
     const user = await User.findById(decoded.id).select("role");
     if (!user)
-      throw new AppError("The owner of this token does not exist", 401);
+      throw new AppError(
+        "The owner of this token does not exist. Please log in again.",
+        401
+      );
     // check if user has changed his password after issuing the jwt
     if (user.passwordChangedAfterTokenIssued(decoded.iat))
       throw new AppError(
