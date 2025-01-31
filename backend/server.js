@@ -22,7 +22,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/auth", authRoutes);
+
+// Error handler middleware
 app.use(globalErrorHandler);
+
 app.listen(port, () => {
   console.log(`Server is listening in port ${port}`);
   connectToMongo();

@@ -56,7 +56,12 @@ module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 500;
 
-  let error = { ...err, name: err.name, message: err.message };
+  let error = {
+    ...err,
+    name: err.name,
+    message: err.message,
+    stack: err.stack,
+  };
 
   if (err.code === 11000) error = handleDuplicateFieldsErrorDB(error);
   if (err.name === "ValidationError") error = handleValidationErrorDB(error);

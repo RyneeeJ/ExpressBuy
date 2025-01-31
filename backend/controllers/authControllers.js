@@ -84,3 +84,28 @@ exports.signup = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.login = async (req, res, next) => {
+  const { email, password } = req.body;
+  try {
+    // Fetch user data based on input email
+    const user = await User.findOne({ email }).select("password");
+
+    // check if password is correct
+    const isPasswordCorrect = await user?.isPasswordCorrect(password);
+
+    // if password incorrect, throw error
+    if (!isPasswordCorrect)
+      throw new AppError("Incorrect email or password", 401);
+
+    // sign and send token with user data
+    const token = signCookieToken(user._id, res);
+    res.status(200).json({
+      status: "Success",
+      token,
+      message: "Logged in successfully",
+    });
+  } catch (err) {
+    next(err);
+  }
+};

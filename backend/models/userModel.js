@@ -104,6 +104,10 @@ userSchema.methods.passwordChangedAfterTokenIssued = function (JWTTimestamp) {
 
   return false;
 };
+
+userSchema.methods.isPasswordCorrect = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
