@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 const BlacklistedToken = require("../models/blacklistedTokenModel");
 const AppError = require("../utils/appError");
+const sendEmail = require("../utils/sendEmail");
 
 const signCookieToken = (id, res) => {
   const token = jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -68,6 +69,7 @@ exports.protectRoute = function (isSigningUp = false) {
   };
 };
 
+// NOTE: Can be merged with signup controller depending if this is not needed anymore in other features
 exports.checkAdminRole = async (req, res, next) => {
   try {
     if (req.user && req.user.role === "admin") req.role = "admin";
@@ -153,6 +155,39 @@ exports.logout = async (req, res, next) => {
     res.status(200).json({
       status: "Success",
       message: "Logged out successfully",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.forgotPassword = async (req, res, next) => {
+  try {
+    // Fetch user data via email input
+    const user = await User.findOne({ email: req.body.email }).select("email");
+    // If no user associated with email, throw error
+    if (!user)
+      throw new AppError("There's no user associated with this email", 404);
+
+    // Generate random reset token
+    const resetToken = user.createPasswordResetToken();
+
+    // configure email options
+    const protocol = req.protocol;
+    const host = req.get("host");
+    const resetUrl = `${protocol}://${host}/resetPassword/${resetToken}`;
+    const emailOptions = {
+      recipient: req.body.email,
+      subject: "ExpressBuy: Password reset link (valid for 10 mins)",
+      message: `You requested a password reset. Click the link to proceed resetting your password ${resetUrl}. If you didn't forget your password, please ignore this email.`,
+    };
+
+    // Send email with resetUrl
+    await sendEmail(emailOptions);
+
+    res.status(200).json({
+      status: "Success",
+      message: "Password reset link sent to your email!",
     });
   } catch (err) {
     next(err);
