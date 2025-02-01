@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
 
-const AppError = require("../utils/appError");
 const User = require("../models/userModel");
+const BlacklistedToken = require("../models/blacklistedTokenModel");
+const AppError = require("../utils/appError");
 
 const signCookieToken = (id, res) => {
   const token = jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -9,7 +10,7 @@ const signCookieToken = (id, res) => {
   });
 
   const cookieOptions = {
-    expies: new Date(
+    expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
@@ -22,20 +23,30 @@ const signCookieToken = (id, res) => {
   return token;
 };
 
-exports.protectRoute = function ({ isSigningUp = false }) {
+exports.protectRoute = function (isSigningUp = false) {
   return async (req, res, next) => {
     try {
       // retrieve jwt from cookie or auth headers
-      const token =
-        req.cookies?.jwt || req.headers.authorization?.replace("Bearer ", "");
+      const token = req.cookies?.jwt;
 
       if (isSigningUp && !token) return next();
+
+      if (!isSigningUp && !token)
+        throw new AppError(
+          "Unauthorized: Please login first to perform this request",
+          401
+        );
+
+      // If token is blacklisted, throw error
+      const isTokenBlacklisted = await BlacklistedToken.findOne({ token });
+      if (isTokenBlacklisted) throw new AppError("Token is invalid", 401);
 
       // validate jwt
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       // check if user still exists
       const user = await User.findById(decoded.id).select("role");
+
       if (!user)
         throw new AppError(
           "The owner of this token does not exist. Please log in again.",
@@ -123,8 +134,22 @@ exports.login = async (req, res, next) => {
   }
 };
 
-exports.logout = (req, res, next) => {
+exports.logout = async (req, res, next) => {
   try {
+    // Extract jwt from cookies
+    const token = req.cookies?.jwt;
+
+    // Blacklist the token
+    await BlacklistedToken.create({ token });
+
+    // Clear cookies
+    const clearCookieOptions = {
+      httpOnly: true,
+    };
+    if (process.env.NODE_ENV === "production") clearCookieOptions.secure = true;
+
+    res.clearCookie("jwt", clearCookieOptions);
+
     res.status(200).json({
       status: "Success",
       message: "Logged out successfully",

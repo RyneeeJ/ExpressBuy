@@ -1,14 +1,16 @@
 const express = require("express");
 
-const router = express.Router();
 const authController = require("../controllers/authControllers");
+
+const router = express.Router();
 
 router.post(
   "/signup",
-  authController.protectRoute({ isSigningUp: true }),
+  authController.protectRoute(true),
   authController.checkAdminRole,
   authController.signup
 );
 router.post("/login", authController.login);
-router.post("logout", authController.protectRoute, authController.logout);
+router.post("/logout", authController.protectRoute(), authController.logout);
+
 module.exports = router;
