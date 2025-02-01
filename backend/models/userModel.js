@@ -96,6 +96,14 @@ userSchema.pre("save", async function (next) {
 
   this.password = await bcrypt.hash(this.password, 12);
   this.passwordConfirm = undefined;
+  next();
+});
+
+userSchema.pre("save", function (next) {
+  // only set passwordChangedAt if password is modified AND the document is not new
+  if (!this.isModified("password") && !this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 3000;
 
   next();
 });
@@ -113,7 +121,7 @@ userSchema.methods.isPasswordCorrect = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
-userSchema.methods.createPasswordResetToken = function () {
+userSchema.methods.createPasswordResetToken = async function () {
   // generate random 32-byte reset token
   const resetToken = crypto.randomBytes(32).toString("hex");
 
@@ -127,6 +135,7 @@ userSchema.methods.createPasswordResetToken = function () {
   this.passwordResetToken = hashedToken;
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
+  await this.save({ validateBeforeSave: false });
   return resetToken;
 };
 
