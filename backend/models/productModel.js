@@ -63,11 +63,9 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Implement possible variants of the same product
-// * Products could or could not have variants
-// * Variants of the same products could have the same or different prices
-// * Products with only one variant/type have only one price and one 'stock'
-// * Products with multiple variants have different number of stocks
+productSchema.methods.hasOnlyOneVariant = function () {
+  return this.variants.length === 1;
+};
 
 const Product = mongoose.model("Product", productSchema);
 module.exports = Product;

@@ -14,7 +14,7 @@ router
   );
 
 router
-  .route("/products/:id")
+  .route("/products/:productId")
   .patch(
     authController.protectRoute(),
     authController.restrictTo("admin"),
@@ -22,10 +22,18 @@ router
   );
 
 router
-  .route("/products/:id/variants")
+  .route("/products/:productId/variants")
   .post(
     authController.protectRoute(),
     authController.restrictTo("admin"),
     adminController.addProductVariant
+  );
+
+router
+  .route("/products/:productId/variants/:variantId")
+  .delete(
+    authController.protectRoute(),
+    authController.restrictTo("admin"),
+    adminController.deleteProductVariant
   );
 module.exports = router;

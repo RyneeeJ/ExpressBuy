@@ -2,7 +2,7 @@ const Product = require("../models/productModel");
 const AppError = require("../utils/appError");
 
 exports.addNewProduct = async (req, res, next) => {
-  const { name, brand, primaryImage, description, variants } = req.body;
+  const { name, brand, primaryImage, description, variants, price } = req.body;
   try {
     const newProduct = await Product.create({
       name,
@@ -10,6 +10,7 @@ exports.addNewProduct = async (req, res, next) => {
       primaryImage,
       description,
       variants,
+      price,
     });
 
     res.status(201).json({
@@ -32,7 +33,7 @@ exports.updateProductDetails = async (req, res, next) => {
         400
       );
     const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
+      req.params.productId,
       req.body,
       {
         new: true,
@@ -59,7 +60,7 @@ exports.updateProductDetails = async (req, res, next) => {
 exports.addProductVariant = async (req, res, next) => {
   const newVariant = req.body;
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.productId);
 
     if (!product) throw new AppError("No product found with this id", 404);
 
@@ -72,6 +73,44 @@ exports.addProductVariant = async (req, res, next) => {
         productVariant: newVariant,
       },
       message: "New product variant added",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.deleteProductVariant = async (req, res, next) => {
+  const { productId, variantId } = req.params;
+  let message;
+  try {
+    // check if there is a product htat mathces with productId
+    const product = await Product.findById(productId);
+
+    if (!product) throw new AppError("No product found with this id", 404);
+
+    // Check if there is a variant that matches with variantId
+    const variant = product.variants.find(
+      (variant) => String(variant._id) === variantId
+    );
+
+    if (!variant)
+      throw new AppError(
+        "Product variant with the specified variantId not found in the database",
+        404
+      );
+
+    if (product.hasOnlyOneVariant()) {
+      await Product.findByIdAndDelete(productId);
+      message = "Last variant deleted. Product removed.";
+    } else {
+      product.variants.pull({ _id: variantId });
+      await product.save();
+      message = "Product variant deleted.";
+    }
+
+    res.status(204).json({
+      status: "Success",
+      message,
     });
   } catch (err) {
     next(err);
