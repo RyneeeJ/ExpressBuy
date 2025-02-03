@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "backend/server.js",
   "scripts": {
-    "start": "nodemon backend/server.js",
+    "start": "export CLOUDINARY_URL=cloudinary://976229935569339:6w368WhKisJUhHvM7q7XjLoYupY@dy8pgzm0c && nodemon backend/server.js",
     "prod": "NODE_ENV=production nodemon backend/server.js"
   },
   "keywords": [],
@@ -12,6 +12,7 @@
   "description": "",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.5.1",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",

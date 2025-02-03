@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const variantSchema = new mongoose.Schema({
   color: String,
   size: String,
-  variantImage: String,
+  storage: String,
+  variantImage: [String],
   stock: {
     type: Number,
     min: 0,
@@ -34,6 +35,10 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide product description"],
     },
+    brand: {
+      type: String,
+      required: [true, "Please specify the brand of the product"],
+    },
     variants: {
       type: [variantSchema],
       required: [true, "A product must have at least one variant"],
@@ -48,7 +53,6 @@ const productSchema = new mongoose.Schema(
       type: Number,
       min: 1,
       max: 5,
-      default: 4.5,
     },
     isFeatured: {
       type: Boolean,

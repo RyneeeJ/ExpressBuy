@@ -26,7 +26,7 @@ const signCookieToken = (id, res) => {
   return token;
 };
 
-exports.protectRoute = function (isSigningUp = false) {
+exports.protectRoute = (isSigningUp = false) => {
   return async (req, res, next) => {
     try {
       // retrieve jwt from cookie or auth headers
@@ -68,6 +68,14 @@ exports.protectRoute = function (isSigningUp = false) {
     } catch (err) {
       next(err);
     }
+  };
+};
+
+exports.restrictTo = (role) => {
+  return (req, res, next) => {
+    if (req.user.role === role) next();
+    else
+      next(new AppError("You are not authorized to perform this request", 401));
   };
 };
 
