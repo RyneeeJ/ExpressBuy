@@ -28,6 +28,21 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Please enter product price"],
     },
+    priceDiscount: {
+      type: Number,
+      validate: {
+        validator: async function (val) {
+          if (!this.price) {
+            const doc = await this.model.findOne(this.getFilter());
+            if (!doc) return true;
+            return val < doc.price;
+          }
+
+          return val < this.price;
+        },
+        message: "Price discount {VALUE} must be less than the original price",
+      },
+    },
     primaryImage: {
       type: String,
       required: [true, "Please provide product image"],

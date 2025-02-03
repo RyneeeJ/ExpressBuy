@@ -11,6 +11,7 @@ exports.addNewProduct = async (req, res, next) => {
       description,
       variants,
       price,
+      priceDiscount: req.body.priceDiscount || undefined,
     });
 
     res.status(201).json({

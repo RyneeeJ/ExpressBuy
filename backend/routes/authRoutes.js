@@ -4,6 +4,7 @@ const authController = require("../controllers/authController");
 
 const router = express.Router();
 
+router.get("/verifyEmail/:token", authController.verifyEmail);
 router.post(
   "/signup",
   authController.protectRoute(true),

@@ -3,6 +3,10 @@ const crypto = require("crypto");
 const mongoose = require("mongoose");
 const { isEmail } = require("validator");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
+const sendEmail = require("../utils/sendEmail");
+const AppError = require("../utils/appError");
 
 const userSchema = new mongoose.Schema(
   {
@@ -71,6 +75,10 @@ const userSchema = new mongoose.Schema(
       ],
       default: [],
     },
+    verified: {
+      type: Boolean,
+      default: false,
+    },
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
@@ -137,6 +145,60 @@ userSchema.methods.createPasswordResetToken = async function () {
 
   await this.save({ validateBeforeSave: false });
   return resetToken;
+};
+
+userSchema.methods.sendEmailVerificationLink = async function (req) {
+  try {
+    // Send verification email
+    const verifyEmailToken = jwt.sign({ id: this._id }, process.env.JWT_SECRET);
+    const protocol = req.protocol;
+    const host = req.get("host");
+    const verifyEmailURL = `${protocol}://${host}/verifyEmail/${verifyEmailToken}`;
+
+    const emailOptions = {
+      recipient: this.email,
+      subject: "Email Verification for ExpressBuy",
+      message:
+        "This auto-generated message is for email verification purposes.",
+      html: `<p>Click this link: <a>${verifyEmailURL}</a> to verify your email</p>`,
+    };
+
+    await sendEmail(emailOptions);
+    // eslint-disable-next-line no-unused-vars
+  } catch (err) {
+    throw new AppError(
+      "There was a problem sending email verification link",
+      500
+    );
+  }
+};
+
+userSchema.methods.sendPasswordResetLink = async function (resetToken, req) {
+  // configure email options
+  const protocol = req.protocol;
+  const host = req.get("host");
+  const resetUrl = `${protocol}://${host}/resetPassword/${resetToken}`;
+  const emailOptions = {
+    recipient: req.body.email,
+    subject: "ExpressBuy: Password reset link (valid for 10 mins)",
+    message: `You requested a password reset. Click the link to proceed resetting your password ${resetUrl}. If you didn't forget your password, please ignore this email.`,
+  };
+
+  try {
+    // Send email with resetUrl
+    await sendEmail(emailOptions);
+
+    // eslint-disable-next-line no-unused-vars
+  } catch (err) {
+    // Clear reset token and expiration from db if there was an error sending the email
+    this.passwordResetToken = undefined;
+    this.passwordResetExpires = undefined;
+    this.save({ validateBeforeSave: false });
+
+    throw new AppError(
+      "There was an error sending the email. Try again later!"
+    );
+  }
 };
 
 const User = mongoose.model("User", userSchema);
