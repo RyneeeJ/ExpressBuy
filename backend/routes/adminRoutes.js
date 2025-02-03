@@ -12,4 +12,12 @@ router
     authController.restrictTo("admin"),
     adminController.addNewProduct
   );
+
+router
+  .route("/products/:id")
+  .patch(
+    authController.protectRoute(),
+    authController.restrictTo("admin"),
+    adminController.updateProductDetails
+  );
 module.exports = router;

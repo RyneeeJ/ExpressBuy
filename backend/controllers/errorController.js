@@ -50,6 +50,11 @@ const handleExpiredJWTError = () =>
 const handleInvalidJWTError = () =>
   new AppError("Invalid authorization token. Please login again.", 401);
 
+const handleCastErrorDB = (error) => {
+  const message = `Invalid ${error.path}: ${error.value}`;
+
+  return new AppError(message, 400);
+};
 // eslint-disable-next-line no-unused-vars
 module.exports = (err, req, res, next) => {
   err.message = err.message || "Server error";
@@ -67,6 +72,7 @@ module.exports = (err, req, res, next) => {
   if (err.name === "ValidationError") error = handleValidationErrorDB(error);
   if (err.name === "TokenExpiredError") error = handleExpiredJWTError();
   if (err.name === "JsonWebTokenError") error = handleInvalidJWTError();
+  if (err.name === "CastError") error = handleCastErrorDB(error);
 
   if (process.env.NODE_ENV === "development") sendErrorDev(error, res);
   else if (process.env.NODE_ENV === "production") sendErrorProd(error, res);

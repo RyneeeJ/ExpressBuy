@@ -11,7 +11,7 @@ const variantSchema = new mongoose.Schema({
     required: [true, "Products must have number of stocks"],
   },
   price: {
-    type: String,
+    type: Number,
     required: [true, "Please provide a price for your product/s"],
   },
   SKU: {
