@@ -55,3 +55,25 @@ exports.updateProductDetails = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.addProductVariant = async (req, res, next) => {
+  const newVariant = req.body;
+  try {
+    const product = await Product.findById(req.params.id);
+
+    if (!product) throw new AppError("No product found with this id", 404);
+
+    product.variants.push(newVariant);
+    await product.save();
+
+    res.status(201).json({
+      status: "Success",
+      data: {
+        productVariant: newVariant,
+      },
+      message: "New product variant added",
+    });
+  } catch (err) {
+    next(err);
+  }
+};

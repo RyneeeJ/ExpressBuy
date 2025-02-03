@@ -10,10 +10,7 @@ const variantSchema = new mongoose.Schema({
     min: 0,
     required: [true, "Products must have number of stocks"],
   },
-  price: {
-    type: Number,
-    required: [true, "Please provide a price for your product/s"],
-  },
+  price: Number,
   SKU: {
     type: String,
     required: [true, "Each product variant must have a unique SKU"],
@@ -26,6 +23,10 @@ const productSchema = new mongoose.Schema(
     name: {
       type: String,
       required: [true, "Product name is required"],
+    },
+    price: {
+      type: Number,
+      required: [true, "Please enter product price"],
     },
     primaryImage: {
       type: String,

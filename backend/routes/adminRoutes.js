@@ -20,4 +20,12 @@ router
     authController.restrictTo("admin"),
     adminController.updateProductDetails
   );
+
+router
+  .route("/products/:id/variants")
+  .post(
+    authController.protectRoute(),
+    authController.restrictTo("admin"),
+    adminController.addProductVariant
+  );
 module.exports = router;
