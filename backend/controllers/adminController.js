@@ -116,3 +116,15 @@ exports.deleteProductVariant = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.deleteProduct = async (req, res, next) => {
+  try {
+    await Product.findByIdAndDelete(req.params.productId);
+
+    res.status(204).json({
+      status: "Success",
+    });
+  } catch (err) {
+    next(err);
+  }
+};

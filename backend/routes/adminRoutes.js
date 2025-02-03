@@ -19,6 +19,11 @@ router
     authController.protectRoute(),
     authController.restrictTo("admin"),
     adminController.updateProductDetails
+  )
+  .delete(
+    authController.protectRoute(),
+    authController.restrictTo("admin"),
+    adminController.deleteProduct
   );
 
 router
