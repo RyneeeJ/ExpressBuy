@@ -1,0 +1,768 @@
+[
+  {
+    "name": "Smartphone",
+    "price": 39999,
+    "description": "A high-performance smartphone with a 6.5-inch AMOLED display, 128GB storage, and 48MP triple camera.",
+    "brand": "XYZ Electronics",
+    "variants": [
+      {
+        "description": "64GB",
+        "stock": 25,
+        "SKU": "SMARTPHONE-64GB",
+        "price": 36999
+      },
+      {
+        "description": "128GB",
+        "stock": 50,
+        "SKU": "SMARTPHONE-128GB",
+        "price": 39999
+      },
+      {
+        "description": "256GB",
+        "stock": 30,
+        "SKU": "SMARTPHONE-256GB",
+        "price": 46999
+      }
+    ],
+    "category": "Electronics",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754954/ExpressBuy-products/h9jpy2ovh6dlkey21zks.webp"
+  },
+  {
+    "name": "Wireless Noise-Canceling Headphones",
+    "price": 16999,
+    "description": "Premium over-ear headphones with active noise cancellation and 30-hour battery life.",
+    "brand": "SoundPro",
+    "variants": [
+      {
+        "description": "Black",
+        "stock": 40,
+        "SKU": "HEADPHONES-BLACK",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738757524/ExpressBuy-products/t3agdsci5ci0smmnmn8l.webp"
+      },
+      {
+        "description": "White",
+        "stock": 35,
+        "SKU": "HEADPHONES-WHITE",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738757540/ExpressBuy-products/ensxbg4yqo39nx2d3opt.jpg"
+      },
+      {
+        "description": "Blue",
+        "stock": 20,
+        "SKU": "HEADPHONES-BLUE",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738757539/ExpressBuy-products/wexrflegvvsbvcawjuck.webp"
+      }
+    ],
+    "category": "Electronics",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738757541/ExpressBuy-products/ipuya9q8lnpoqccvxbbo.webp"
+  },
+  {
+    "name": "Organic Cotton T-Shirt",
+    "price": 699,
+    "description": "Soft and breathable unisex t-shirt made from 100% organic cotton.",
+    "brand": "EcoWear",
+    "variants": [
+      { "description": "Small", "stock": 100, "SKU": "TSHIRT-S" },
+      { "description": "Medium", "stock": 150, "SKU": "TSHIRT-M" },
+      { "description": "Large", "stock": 120, "SKU": "TSHIRT-L" },
+      { "description": "X-Large", "stock": 80, "SKU": "TSHIRT-XL" }
+    ],
+    "category": "Apparel",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754956/ExpressBuy-products/q1riltvx6awnjf2a5chh.webp"
+  },
+  {
+    "name": "Stainless Steel Water Bottle",
+    "price": 999,
+    "description": "Durable and eco-friendly 1L stainless steel water bottle with double-wall insulation.",
+    "brand": "AquaPure",
+    "variants": [
+      { "description": "Black", "stock": 60, "SKU": "WATERBOTTLE-BLACK" },
+      {
+        "description": "Gold",
+        "stock": 45,
+        "SKU": "WATERBOTTLE-GOLD"
+      }
+    ],
+    "category": "Home & Kitchen",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754956/ExpressBuy-products/gqhlrcnsiudig36ntay1.webp"
+  },
+  {
+    "name": "Smart Fitness Tracker",
+    "price": 5299,
+    "description": "A sleek fitness tracker with heart rate monitoring, sleep tracking, and 7-day battery life.",
+    "brand": "FitGear",
+    "variants": [
+      { "description": "Black", "stock": 70, "SKU": "FITNESS-BLACK" },
+      { "description": "Pink", "stock": 50, "SKU": "FITNESS-PINK" },
+      { "description": "Midnight Blue", "stock": 40, "SKU": "FITNESS-BLUE" }
+    ],
+    "category": "Fitness & Wearables",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754957/ExpressBuy-products/u4wjyfzsxjztayyrkk3t.webp"
+  },
+  {
+    "name": "Vegan Leather Backpack",
+    "price": 4699,
+    "description": "Stylish and sustainable backpack made from vegan leather with multiple compartments.",
+    "brand": "GreenStyle",
+    "variants": [
+      {
+        "description": "Brown",
+        "stock": 25,
+        "SKU": "BACKPACK-BROWN"
+      }
+    ],
+    "category": "Bags & Accessories",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754958/ExpressBuy-products/jitkdwcbx5ckx7ihgfeu.webp"
+  },
+  {
+    "name": "Electric Air Fryer",
+    "price": 7599,
+    "description": "A 5.8L capacity air fryer with digital controls and 7 preset cooking functions.",
+    "brand": "KitchenPro",
+    "variants": [
+      {
+        "description": "Black",
+        "stock": 40,
+        "SKU": "AIRFRYER-BLACK"
+      },
+      {
+        "description": "White",
+        "stock": 35,
+        "SKU": "AIRFRYER-WHITE",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754955/ExpressBuy-products/dsjs85fppyumay8atine.jpg"
+      }
+    ],
+    "category": "Home & Kitchen",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754955/ExpressBuy-products/c7zedblivkyc5sb0v81l.webp"
+  },
+  {
+    "name": "Natural Soy Wax Candle",
+    "price": 699,
+    "description": "Hand-poured soy wax candle with a wooden wick and long-lasting fragrance.",
+    "brand": "AromaZen",
+    "variants": [
+      { "description": "Lavender", "stock": 50, "SKU": "CANDLE-LAVENDER" },
+      {
+        "description": "Vanilla",
+        "stock": 60,
+        "SKU": "CANDLE-VANILLA",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754960/ExpressBuy-products/laq0jjcozaotisbjetrf.webp"
+      },
+      {
+        "description": "Sandalwood",
+        "stock": 45,
+        "SKU": "CANDLE-SANDALWOOD",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754958/ExpressBuy-products/uyj0ptrdo1y0txiayiw0.png"
+      }
+    ],
+    "category": "Home Decor",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738765318/ExpressBuy-products/lzeqgbpzgdp3h0oya6qo.webp"
+  },
+  {
+    "name": "Portable Bluetooth Speaker",
+    "price": 3349,
+    "description": "Compact and waterproof Bluetooth speaker with 12-hour playtime.",
+    "brand": "SoundWave",
+    "variants": [
+      { "description": "Black", "stock": 70, "SKU": "SPEAKER-BLACK" }
+    ],
+    "category": "Electronics",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754954/ExpressBuy-products/w7446rstozunrdil6szr.jpg"
+  },
+  {
+    "name": "Bamboo Chopping Board",
+    "price": 1299,
+    "description": "Eco-friendly bamboo cutting board with juice groove and easy-grip handle.",
+    "brand": "EcoKitchen",
+    "variants": [
+      { "description": "Small", "stock": 43, "SKU": "CUTTING-BOARD-S" },
+      { "description": "Medium", "stock": 43, "SKU": "CUTTING-BOARD-M" },
+      { "description": "Large", "stock": 43, "SKU": "CUTTING-BOARD-L" }
+    ],
+    "category": "Home & Kitchen",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754960/ExpressBuy-products/rofczclebnzrgo5atnvk.jpg"
+  },
+  {
+    "name": "Men’s Running Shoes",
+    "price": 6699,
+    "description": "Lightweight and breathable running shoes with cushioned soles for maximum comfort.",
+    "brand": "RunMax",
+    "variants": [
+      {
+        "description": "Black/White",
+        "stock": 60,
+        "SKU": "SHOES-BLACKWHITE"
+      },
+      {
+        "description": "Black/Purple",
+        "stock": 50,
+        "SKU": "SHOES-BLUEPURPLE",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754958/ExpressBuy-products/jtebswe45hiqcpti6haw.webp"
+      },
+      {
+        "description": "Pink/White",
+        "stock": 40,
+        "SKU": "SHOES-PINKWHITE",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754960/ExpressBuy-products/xglo9jbuhisvorwmrbp3.webp"
+      }
+    ],
+    "category": "Footwear",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754959/ExpressBuy-products/ikq6r6qq1wkenbxtejxp.avif"
+  },
+  {
+    "name": "Ceramic Plant Pots",
+    "price": 1899,
+    "description": "Elegant ceramic plant pots with drainage holes and matching saucers.",
+    "brand": "GreenThumb",
+    "variants": [
+      {
+        "description": "White",
+        "stock": 50,
+        "SKU": "POT-WHITE"
+      }
+    ],
+    "category": "Home Decor",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754959/ExpressBuy-products/r9e84aahqmszei7dtuai.jpg"
+  },
+  {
+    "name": "Wireless Charging Pad",
+    "price": 3899,
+    "description": "Fast-charging wireless pad compatible with Qi-enabled devices.",
+    "brand": "ChargeTech",
+    "variants": [
+      {
+        "description": "Black",
+        "stock": 70,
+        "SKU": "CHARGER-BLACK",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754954/ExpressBuy-products/zvx94wxhzvtqtjecqmap.jpg"
+      },
+      {
+        "description": "Gray",
+        "stock": 60,
+        "SKU": "CHARGER-GRAY"
+      }
+    ],
+    "category": "Electronics",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754955/ExpressBuy-products/jgj7hfym9p95lo877yp0.webp"
+  },
+  {
+    "name": "Luxury Bath Towel Set",
+    "price": 2499,
+    "description": "Ultra-soft and absorbent 100% Turkish cotton bath towels.",
+    "brand": "ComfortLux",
+    "variants": [
+      {
+        "description": "Green",
+        "stock": 80,
+        "SKU": "TOWEL-GREEN"
+      },
+      {
+        "description": "Gray",
+        "stock": 70,
+        "SKU": "TOWEL-GRAY",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754957/ExpressBuy-products/nuyat1ufdzyyc3xnt22x.jpg"
+      }
+    ],
+    "category": "Home & Kitchen",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754961/ExpressBuy-products/uayculx6rvga7xv2oopa.webp"
+  },
+  {
+    "name": "Reusable Silicone Food Bags",
+    "price": 1199,
+    "description": "Eco-friendly and leak-proof silicone bags for food storage.",
+    "brand": "EcoFresh",
+    "variants": [
+      {
+        "description": "Assorted Colors",
+        "stock": 100,
+        "SKU": "FOODBAGS-COLORS"
+      }
+    ],
+    "category": "Home & Kitchen",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738754960/ExpressBuy-products/pfslasgjb0b29llzjvvd.jpg"
+  },
+  {
+    "name": "Wireless Gaming Headset",
+    "price": 149.99,
+    "description": "Immersive wireless gaming headset with surround sound and noise-canceling microphone.",
+    "brand": "GameGear",
+    "variants": [
+      { "description": "Black", "stock": 50, "SKU": "HEADSET-BLACK" },
+      {
+        "description": "White",
+        "stock": 40,
+        "SKU": "HEADSET-WHITE",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789992/ExpressBuy-products/mwnwbxgjghowxnvodawu.jpg"
+      }
+    ],
+    "category": "Electronics",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789992/ExpressBuy-products/u1xzffuo4ulfaz1nqxpl.jpg"
+  },
+  {
+    "name": "Women’s Yoga Pants",
+    "price": 54.99,
+    "description": "High-waisted, stretchy yoga pants with moisture-wicking fabric.",
+    "brand": "ActiveFit",
+    "variants": [
+      { "description": "Small", "stock": 60, "SKU": "YOGA-PANTS-S" },
+      { "description": "Medium", "stock": 70, "SKU": "YOGA-PANTS-M" },
+      { "description": "Large", "stock": 50, "SKU": "YOGA-PANTS-L" }
+    ],
+    "category": "Apparel",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789997/ExpressBuy-products/wf3axyish8br6d3y8rje.webp"
+  },
+  {
+    "name": "Blender",
+    "price": 89.99,
+    "description": "High-speed blender with 1200W motor and 64oz capacity.",
+    "brand": "KitchenPro",
+    "variants": [
+      {
+        "description": "Black",
+        "stock": 30,
+        "SKU": "BLENDER-BLACK",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789992/ExpressBuy-products/glynhuchgos2psfc8zce.jpg"
+      },
+      { "description": "Red", "stock": 25, "SKU": "BLENDER-RED" }
+    ],
+    "category": "Home & Kitchen",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789992/ExpressBuy-products/tsvzkkwy38sdcpsd4kxn.jpg"
+  },
+  {
+    "name": "Resistance Band Set",
+    "price": 29.99,
+    "description": "Set of 5 resistance bands with varying tension levels for full-body workouts.",
+    "brand": "FitGear",
+    "variants": [
+      {
+        "description": "Assorted Colors",
+        "stock": 100,
+        "SKU": "RESISTANCE-BANDS"
+      }
+    ],
+    "category": "Fitness & Wearables",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789996/ExpressBuy-products/lraqgcqk9k4878epyusl.webp"
+  },
+  {
+    "name": "Leather Messenger Bag",
+    "price": 129.99,
+    "description": "Stylish and durable leather messenger bag with multiple compartments.",
+    "brand": "LuxLeather",
+    "variants": [
+      {
+        "description": "Black",
+        "stock": 40,
+        "SKU": "MESSENGER-BLACK",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789995/ExpressBuy-products/w80xb9sqilifd0oj0ssu.webp"
+      },
+      { "description": "Brown", "stock": 35, "SKU": "MESSENGER-BROWN" }
+    ],
+    "category": "Bags & Accessories",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789994/ExpressBuy-products/g2rd5frrnubtrkvwk8ju.webp"
+  },
+  {
+    "name": "Desk Organizer",
+    "price": 29.99,
+    "description": "Minimalist wooden desk organizer with compartments for pens, papers, and gadgets.",
+    "brand": "OfficeEssentials",
+    "variants": [
+      {
+        "description": "Light Wood",
+        "stock": 50,
+        "SKU": "DESK-ORGANIZER-LIGHT"
+      }
+    ],
+    "category": "Office Supplies",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789998/ExpressBuy-products/u5s8krant5hh86gc7lkm.jpg"
+  },
+  {
+    "name": "Electric Kettle",
+    "price": 49.99,
+    "description": "1.7L electric kettle with auto-shutoff and boil-dry protection.",
+    "brand": "KitchenPro",
+    "variants": [
+      {
+        "description": "White",
+        "stock": 60,
+        "SKU": "KETTLE-WHITE",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789995/ExpressBuy-products/meubirwajnhnuhq3v7x6.jpg"
+      },
+      { "description": "Black", "stock": 55, "SKU": "KETTLE-BLACK" }
+    ],
+    "category": "Home & Kitchen",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789994/ExpressBuy-products/xdzdcxnn8uige0ecpfiz.png"
+  },
+  {
+    "name": "Men’s Dress Shirt",
+    "price": 79.99,
+    "description": "Classic men’s dress shirt made from premium cotton with a slim fit.",
+    "brand": "UrbanWear",
+    "variants": [
+      { "description": "Small", "stock": 40, "SKU": "SHIRT-S" },
+      { "description": "Medium", "stock": 50, "SKU": "SHIRT-M" },
+      { "description": "Large", "stock": 45, "SKU": "SHIRT-L" }
+    ],
+    "category": "Apparel",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789999/ExpressBuy-products/zgntk4f5fvgnejvc7p5g.png"
+  },
+  {
+    "name": "Adjustable Dumbbell Set",
+    "price": 199.99,
+    "description": "Space-saving adjustable dumbbells with a weight range of 5-50 lbs.",
+    "brand": "PowerFit",
+    "variants": [
+      {
+        "description": "Black",
+        "stock": 30,
+        "SKU": "DUMBBELL-BLACK",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789993/ExpressBuy-products/icse6k669029v0tujklp.webp"
+      },
+      { "description": "White", "stock": 25, "SKU": "DUMBBELL-WHITE" }
+    ],
+    "category": "Fitness & Wearables",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789993/ExpressBuy-products/ftf0vmb7gsht5umjsaju.webp"
+  },
+  {
+    "name": "Travel Duffle Bag",
+    "price": 89.99,
+    "description": "Durable and spacious travel duffle bag with multiple compartments.",
+    "brand": "UrbanGear",
+    "variants": [
+      { "description": "Black", "stock": 50, "SKU": "DUFFLE-BLACK" },
+      {
+        "description": "Gray",
+        "stock": 45,
+        "SKU": "DUFFLE-GRAY",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789992/ExpressBuy-products/pe201muq44f4mdyfiptx.webp"
+      }
+    ],
+    "category": "Bags & Accessories",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789990/ExpressBuy-products/kfrbbclkcvatvtto97q5.avif"
+  },
+  {
+    "name": "Wall Clock",
+    "price": 39.99,
+    "description": "Modern wall clock with a silent sweep mechanism and minimalist design.",
+    "brand": "HomeEssentials",
+    "variants": [
+      {
+        "description": "Black",
+        "stock": 60,
+        "SKU": "CLOCK-BLACK",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789998/ExpressBuy-products/dvnkk8yrhvzdt2lzpzbp.webp"
+      },
+      { "description": "White", "stock": 55, "SKU": "CLOCK-WHITE" }
+    ],
+    "category": "Home Decor",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789996/ExpressBuy-products/y1najga4fztszzynyzlq.webp"
+  },
+  {
+    "name": "Electric Shaver",
+    "price": 79.99,
+    "description": "Rechargeable electric shaver with a precision trimmer for a smooth shave.",
+    "brand": "GroomPro",
+    "variants": [
+      { "description": "Black", "stock": 40, "SKU": "SHAVER-BLACK" }
+    ],
+    "category": "Health & Personal Care",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789995/ExpressBuy-products/bbsfwyi9vwecoamckbmc.webp"
+  },
+  {
+    "name": "Notebook Set",
+    "price": 19.99,
+    "description": "A set of 3 premium leather-bound notebooks.",
+    "brand": "WriteWell",
+    "variants": [
+      { "description": "Black", "stock": 100, "SKU": "NOTEBOOK-BLACK" }
+    ],
+    "category": "Office Supplies",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789996/ExpressBuy-products/t3mgsaguntw9ikilhsdi.webp"
+  },
+  {
+    "name": "Women’s Running Shoes",
+    "price": 109.99,
+    "description": "Lightweight and breathable running shoes with cushioned soles for maximum comfort.",
+    "brand": "RunMax",
+    "variants": [
+      { "description": "Black/White", "stock": 60, "SKU": "RUNNING-SHOES-BW" },
+      {
+        "description": "Pink/White",
+        "stock": 50,
+        "SKU": "RUNNING-SHOES-PW",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789997/ExpressBuy-products/isjp4cxku4g2t4q2wggh.webp"
+      }
+    ],
+    "category": "Footwear",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789996/ExpressBuy-products/gzc0f1ci8g92xvjlyihr.webp"
+  },
+  {
+    "name": "Aromatherapy Diffuser",
+    "price": 39.99,
+    "description": "Ultrasonic essential oil diffuser with 7 color-changing LED lights.",
+    "brand": "AromaZen",
+    "variants": [
+      { "description": "Black", "stock": 60, "SKU": "DIFFUSER-BLACK" }
+    ],
+    "category": "Home Decor",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1738789991/ExpressBuy-products/e4y17qupcmotscyhtif7.webp"
+  },
+  {
+    "name": "Wireless Ergonomic Mouse",
+    "price": 49.99,
+    "description": "Comfortable wireless mouse designed for ergonomic support during long work sessions.",
+    "brand": "OfficeEssentials",
+    "variants": [
+      { "description": "Black", "stock": 60, "SKU": "MOUSE-BLACK" },
+      {
+        "description": "White",
+        "stock": 50,
+        "SKU": "MOUSE-WHITE",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253973/ExpressBuy-products/olkrdnslx8vagfi6wgcx.webp"
+      }
+    ],
+    "category": "Office Supplies",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253972/ExpressBuy-products/crv8dl9kwldplazsdq0i.webp"
+  },
+  {
+    "name": "Men’s Casual Sneakers",
+    "price": 89.99,
+    "description": "Stylish and comfortable sneakers for everyday wear.",
+    "brand": "UrbanWear",
+    "variants": [
+      { "description": "Black", "stock": 70, "SKU": "SNEAKERS-BLACK" }
+    ],
+    "category": "Footwear",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253975/ExpressBuy-products/mxtoe1ckjgxam7ggg14u.webp"
+  },
+  {
+    "name": "Electric Pressure Cooker",
+    "price": 129.99,
+    "description": "Multi-functional electric pressure cooker with 10 preset cooking programs.",
+    "brand": "KitchenPro",
+    "variants": [
+      { "description": "Black", "stock": 40, "SKU": "PRESSURECOOKER-BLACK" },
+      {
+        "description": "Silver",
+        "stock": 35,
+        "SKU": "PRESSURECOOKER-SILVER",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253971/ExpressBuy-products/qyezxo2qwr3hibrmsmds.webp"
+      }
+    ],
+    "category": "Home & Kitchen",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253975/ExpressBuy-products/ref6s1y3uhpf3xsbvq5c.webp"
+  },
+  {
+    "name": "Wireless Earbuds",
+    "price": 79.99,
+    "description": "True wireless earbuds with noise isolation and 24-hour battery life.",
+    "brand": "SoundPro",
+    "variants": [
+      { "description": "Black", "stock": 80, "SKU": "EARBUDS-BLACK" },
+      {
+        "description": "White",
+        "stock": 70,
+        "SKU": "EARBUDS-WHITE",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253974/ExpressBuy-products/iekfqzph4fdkt3ecmg7k.webp"
+      }
+    ],
+    "category": "Electronics",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253974/ExpressBuy-products/mdezhzqpdsulayzg8oem.webp"
+  },
+  {
+    "name": "Women’s Denim Jacket",
+    "price": 99.99,
+    "description": "Classic denim jacket with a modern fit and distressed finish.",
+    "brand": "UrbanWear",
+    "variants": [
+      { "description": "Small", "stock": 50, "SKU": "JACKET-S" },
+      { "description": "Medium", "stock": 60, "SKU": "JACKET-M" },
+      { "description": "Large", "stock": 40, "SKU": "JACKET-L" }
+    ],
+    "category": "Apparel",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253975/ExpressBuy-products/yeh16tll1tqoi6fbyakl.jpg"
+  },
+  {
+    "name": "Smart Thermostat",
+    "price": 199.99,
+    "description": "Wi-Fi-enabled smart thermostat with energy-saving features.",
+    "brand": "HomeEssentials",
+    "variants": [
+      { "description": "White", "stock": 30, "SKU": "THERMOSTAT-WHITE" }
+    ],
+    "category": "Home & Kitchen",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253972/ExpressBuy-products/d1lpqm5yzytr6dn5x4ad.webp"
+  },
+  {
+    "name": "Foam Roller",
+    "price": 24.99,
+    "description": "High-density foam roller for muscle recovery and flexibility.",
+    "brand": "FitGear",
+    "variants": [
+      { "description": "Black", "stock": 100, "SKU": "FOAMROLLER-BLACK" },
+      {
+        "description": "Blue",
+        "stock": 90,
+        "SKU": "FOAMROLLER-BLUE",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253973/ExpressBuy-products/vel8fx0beqvo73aiblb8.jpg"
+      }
+    ],
+    "category": "Fitness & Wearables",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739255390/ExpressBuy-products/sue9tppxrrsdzwcrx01u.webp"
+  },
+  {
+    "name": "Leather Laptop Bag",
+    "price": 149.99,
+    "description": "Professional leather laptop bag with a padded compartment and multiple pockets.",
+    "brand": "LuxLeather",
+    "variants": [
+      { "description": "SageBrown", "stock": 35, "SKU": "LAPTOPBAG-SAGEBROWN" }
+    ],
+    "category": "Bags & Accessories",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253975/ExpressBuy-products/szcjlbn9zxv08hicpbfv.jpg"
+  },
+  {
+    "name": "Desk Lamp",
+    "price": 34.99,
+    "description": "Adjustable LED desk lamp with 3 brightness levels.",
+    "brand": "BrightHome",
+    "variants": [
+      { "description": "Black", "stock": 70, "SKU": "LAMP-BLACK" },
+      {
+        "description": "Silver",
+        "stock": 60,
+        "SKU": "LAMP-SILVER",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253972/ExpressBuy-products/hvsjl6yaenk0n8ol35fs.jpg"
+      }
+    ],
+    "category": "Office Supplies",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253971/ExpressBuy-products/ortkbq25jq0ncjzgeoem.webp"
+  },
+  {
+    "name": "Electric Can Opener",
+    "price": 29.99,
+    "description": "Automatic electric can opener with a built-in knife sharpener.",
+    "brand": "KitchenPro",
+    "variants": [{ "description": "Red", "stock": 45, "SKU": "CANOPENER-RED" }],
+    "category": "Home & Kitchen",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253972/ExpressBuy-products/c9wkdjbmynxcoshlparb.jpg"
+  },
+  {
+    "name": "Men’s Leather Belt",
+    "price": 39.99,
+    "description": "Genuine leather belt with a polished buckle and adjustable fit.",
+    "brand": "LuxLeather",
+    "variants": [{ "description": "Brown", "stock": 70, "SKU": "BELT-BROWN" }],
+    "category": "Bags & Accessories",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253977/ExpressBuy-products/xejebsqorrhhgweuafbk.webp"
+  },
+  {
+    "name": "Wireless Keyboard",
+    "price": 59.99,
+    "description": "Slim and quiet wireless keyboard with a long-lasting battery.",
+    "brand": "OfficeEssentials",
+    "variants": [
+      { "description": "Black", "stock": 60, "SKU": "KEYBOARD-BLACK" }
+    ],
+    "category": "Office Supplies",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253974/ExpressBuy-products/mdgjrkpp6jhvzqmop5ha.jpg"
+  },
+  {
+    "name": "Women’s Wool Scarf",
+    "price": 49.99,
+    "description": "Soft and warm wool scarf for women",
+    "brand": "WinterStyle",
+    "variants": [{ "description": "Red", "stock": 40, "SKU": "SCARF-RED" }],
+    "category": "Apparel",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253975/ExpressBuy-products/oqncltzrhfpe3fhyo5kr.jpg"
+  },
+  {
+    "name": "Electric Blanket",
+    "price": 79.99,
+    "description": "Queen-size electric blanket with 10 heat settings.",
+    "brand": "ComfortLux",
+    "variants": [
+      {
+        "description": "Black/White-Checkered",
+        "stock": 50,
+        "SKU": "BLANKET-GRAY-BLACKWHITE-CHECKERED"
+      }
+    ],
+    "category": "Home & Kitchen",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253972/ExpressBuy-products/jcoper2qhlieolb1rlvu.webp"
+  },
+  {
+    "name": "Smart Doorbell",
+    "price": 199.99,
+    "description": "Wi-Fi-enabled smart doorbell with HD video and two-way audio.",
+    "brand": "HomeEssentials",
+    "variants": [
+      {
+        "description": "Black/White",
+        "stock": 30,
+        "SKU": "DOORBELL-BLACKWHITE"
+      }
+    ],
+    "category": "Home & Kitchen",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253973/ExpressBuy-products/hz1vx6cflfccoxihruiy.jpg"
+  },
+  {
+    "name": "Men’s Athletic Shorts",
+    "price": 39.99,
+    "description": "Lightweight and breathable athletic shorts for workouts or casual wear.",
+    "brand": "ActiveFit",
+    "variants": [
+      { "description": "Black", "stock": 70, "SKU": "SHORTS-BLACK" }
+    ],
+    "category": "Apparel",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253974/ExpressBuy-products/txeh0vnhyvyj8olkbvb5.webp"
+  },
+  {
+    "name": "Reusable Water Bottle",
+    "price": 24.99,
+    "description": "Eco-friendly stainless steel water bottle with double-wall insulation.",
+    "brand": "AquaPure",
+    "variants": [
+      { "description": "Blue", "stock": 80, "SKU": "WATERBOTTLE-BLUE" },
+      {
+        "description": "Green",
+        "stock": 70,
+        "SKU": "WATERBOTTLE-GREEN",
+        "variantImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253973/ExpressBuy-products/dtujgbrjftcq8bxjmngd.webp"
+      }
+    ],
+    "category": "Home & Kitchen",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253973/ExpressBuy-products/ut6bweznddrde6i20rbu.webp"
+  },
+  {
+    "name": "Wireless Charging Stand",
+    "price": 59.99,
+    "description": "Fast-charging wireless stand compatible with Qi-enabled devices.",
+    "brand": "ChargeTech",
+    "variants": [
+      { "description": "Black", "stock": 50, "SKU": "CHARGERSTAND-BLACK" }
+    ],
+    "category": "Electronics",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253974/ExpressBuy-products/jlbamxzlsououp6f4uam.webp"
+  },
+  {
+    "name": "Men’s Dress Shoes",
+    "price": 129.99,
+    "description": "Classic leather dress shoes with a polished finish.",
+    "brand": "UrbanWear",
+    "variants": [
+      { "description": "Brown", "stock": 50, "SKU": "DRESS-SHOES-BROWN" }
+    ],
+    "category": "Footwear",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253974/ExpressBuy-products/kpcwbaersyuis0sk2kd1.jpg"
+  },
+  {
+    "name": "Smart Plug",
+    "price": 29.99,
+    "description": "Wi-Fi-enabled smart plug for remote control of your devices.",
+    "brand": "HomeEssentials",
+    "variants": [
+      { "description": "White", "stock": 100, "SKU": "SMARTPLUG-WHITE" }
+    ],
+    "category": "Home & Kitchen",
+    "primaryImage": "https://res.cloudinary.com/dy8pgzm0c/image/upload/v1739253971/ExpressBuy-products/p0hdineewrdabb6ojoq1.jpg"
+  }
+]

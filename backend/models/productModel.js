@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 
 const variantSchema = new mongoose.Schema({
-  color: String,
-  size: String,
-  storage: String,
-  variantImage: [String],
+  description: {
+    type: String,
+    required: [true, "Please provide a specific description of this variant"],
+  },
+  variantImage: String,
   stock: {
     type: Number,
     min: 0,
