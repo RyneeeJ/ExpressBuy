@@ -8,6 +8,7 @@ const globalErrorHandler = require("./controllers/errorController");
 
 const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const productRoutes = require("./routes/productRoutes");
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/admin", adminRoutes);
+app.use("/api/v1/products", productRoutes);
 // Error handler middleware
 app.use(globalErrorHandler);
 

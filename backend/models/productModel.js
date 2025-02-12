@@ -52,6 +52,10 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide product description"],
     },
+    category: {
+      type: String,
+      required: [true, "Each product must belong to a specific category"],
+    },
     brand: {
       type: String,
       required: [true, "Please specify the brand of the product"],
