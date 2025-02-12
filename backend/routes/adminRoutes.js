@@ -40,5 +40,10 @@ router
     authController.protectRoute(),
     authController.restrictTo("admin"),
     adminController.deleteProductVariant
+  )
+  .patch(
+    authController.protectRoute(),
+    authController.restrictTo("admin"),
+    adminController.updateProductVariant
   );
 module.exports = router;

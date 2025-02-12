@@ -57,6 +57,44 @@ exports.updateProductDetails = async (req, res, next) => {
     next(err);
   }
 };
+// TODO: updateProductVariant
+exports.updateProductVariant = async (req, res, next) => {
+  const { productId, variantId } = req.params;
+  const { description, SKU, stock, price } = req.body;
+  try {
+    // check if there is a product htat mathces with productId
+    const product = await Product.findById(productId);
+
+    if (!product) throw new AppError("No product found with this id", 404);
+
+    // Check if there is a variant that matches with variantId
+    const variant = product.variants.find(
+      (variant) => String(variant._id) === variantId
+    );
+
+    if (!variant)
+      throw new AppError(
+        "Product variant with the specified variantId not found in the database",
+        404
+      );
+
+    if (description) variant.description = description;
+    if (SKU) variant.SKU = SKU;
+    if (stock) variant.stock = stock;
+    if (price) variant.price = price;
+
+    await product.save({ validateModifiedOnly: true });
+
+    res.status(200).json({
+      status: "Success",
+      data: {
+        product,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 
 exports.addProductVariant = async (req, res, next) => {
   const newVariant = req.body;
