@@ -33,13 +33,31 @@ exports.getProducts = async (req, res, next) => {
 
     query = query.skip(skip).limit(limit);
     // Fetch query
-    const products = await query;
+    const products = await query.select(
+      "primaryImage name price isFeatured isInStock"
+    );
 
     res.status(200).json({
       status: "Success",
       results: products.length,
       data: {
         products,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getProduct = async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.params.productId).select(
+      "-__v -createdAt -updatedAt"
+    );
+    res.status(200).json({
+      status: "Success",
+      data: {
+        product,
       },
     });
   } catch (err) {

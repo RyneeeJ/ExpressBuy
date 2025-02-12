@@ -79,9 +79,15 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isInStock: Boolean,
   },
   { timestamps: true }
 );
+
+productSchema.pre("save", function (next) {
+  this.isInStock = this.variants.some((variant) => variant.stock > 0);
+  next();
+});
 
 productSchema.methods.hasOnlyOneVariant = function () {
   return this.variants.length === 1;
