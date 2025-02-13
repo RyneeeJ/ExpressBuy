@@ -10,5 +10,10 @@ router
     authController.protectRoute(),
     authController.restrictTo("customer"),
     cartController.addToCart
+  )
+  .delete(
+    authController.protectRoute(),
+    authController.restrictTo("customer"),
+    cartController.removeFromCart
   );
 module.exports = router;
