@@ -1,7 +1,7 @@
 const Cart = require("../models/cartModel");
 // const Product = require("../models/productModel");
 const AppError = require("../utils/appError");
-const getCartAndProduct = require("../utils/cart");
+const checkCartAndProduct = require("../utils/cart");
 
 exports.getCartItems = async (req, res, next) => {
   try {
@@ -16,7 +16,7 @@ exports.addToCart = async (req, res, next) => {
   const { productId } = req.params;
   const { variantId, quantity } = req.body;
   try {
-    let { cart, variant } = await getCartAndProduct(
+    let { cart, variant, existingItem } = await checkCartAndProduct(
       userId,
       productId,
       variantId
@@ -31,12 +31,6 @@ exports.addToCart = async (req, res, next) => {
       variant: variantId,
       quantity: quantity || 1,
     };
-    // check if item is already in the cart
-    const existingItem = cart.items.find(
-      (item) =>
-        item.product.toString() === productId &&
-        item.variant.toString() === variantId
-    );
 
     // item already exists, increase quantity
     if (existingItem) existingItem.quantity += quantity || 1;
@@ -49,6 +43,33 @@ exports.addToCart = async (req, res, next) => {
       data: {
         item: newItem,
       },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.removeFromCart = async (req, res, next) => {
+  const userId = req.user._id.toString();
+  const { productId } = req.params;
+  const { variantId } = req.body;
+  try {
+    // Check cart and product/variant
+    const { cart, existingItem } = await checkCartAndProduct(
+      userId,
+      productId,
+      variantId
+    );
+
+    if (!cart) throw new AppError("Cart not found", 404);
+    if (!existingItem) throw new AppError("Item not found in cart", 404);
+
+    // remove item from cart
+    cart.items.pull({ product: productId, variant: variantId });
+    await cart.save();
+
+    res.status(204).json({
+      status: "Success",
     });
   } catch (err) {
     next(err);
