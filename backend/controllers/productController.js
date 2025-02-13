@@ -3,7 +3,7 @@ const AppError = require("../utils/appError");
 const filterProducts = require("../utils/filterProducts");
 const paginateProducts = require("../utils/paginateProducts");
 
-exports.getProducts = async (req, res, next) => {
+exports.getAllProducts = async (req, res, next) => {
   try {
     // FILTER
     const filter = filterProducts(req.query);
