@@ -13,7 +13,7 @@ router.get(
 
 router
   .route("/:productId")
-  .patch(
+  .post(
     authController.protectRoute(),
     authController.restrictTo("customer"),
     cartController.addToCart
@@ -23,4 +23,12 @@ router
     authController.restrictTo("customer"),
     cartController.removeFromCart
   );
+
+router.patch(
+  "/:productId/toggle",
+  authController.protectRoute(),
+  authController.restrictTo("customer"),
+  cartController.toggleSelectItem
+);
+
 module.exports = router;
