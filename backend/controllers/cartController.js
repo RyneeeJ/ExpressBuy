@@ -4,8 +4,44 @@ const AppError = require("../utils/appError");
 const checkCartAndProduct = require("../utils/cart");
 
 exports.getCartItems = async (req, res, next) => {
+  const userId = req.user._id.toString();
   try {
-    //
+    const cart = await Cart.findOne({ user: userId })
+      .populate({
+        path: "items.product",
+        select: "name variants price",
+      })
+      .populate({
+        path: "user",
+        select: "firstName",
+      })
+      .lean();
+
+    let totalPrice = 0;
+    cart.items = cart.items.map((item) => {
+      const variant = item.product.variants.find(
+        (v) => v._id.toString() === item.variant.toString()
+      );
+
+      const price = item.quantity * (item.variant.price || item.product.price);
+
+      if (item.selected) totalPrice += price;
+      return { ...item, variant, price };
+    });
+
+    cart.totalPrice = totalPrice;
+    if (!cart)
+      return res.status(200).json({
+        user: userId,
+        items: [],
+      });
+
+    res.status(200).json({
+      status: "Success",
+      data: {
+        cart,
+      },
+    });
   } catch (err) {
     next(err);
   }

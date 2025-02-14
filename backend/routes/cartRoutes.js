@@ -4,6 +4,13 @@ const authController = require("../controllers/authController");
 const cartController = require("../controllers/cartController");
 const router = express.Router();
 
+router.get(
+  "/",
+  authController.protectRoute(),
+  authController.restrictTo("customer"),
+  cartController.getCartItems
+);
+
 router
   .route("/:productId")
   .patch(

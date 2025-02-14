@@ -23,6 +23,10 @@ const cartSchema = new mongoose.Schema({
         required: true,
         min: 1,
       },
+      selected: {
+        type: Boolean,
+        default: false,
+      },
     },
   ],
 });
