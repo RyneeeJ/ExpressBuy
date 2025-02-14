@@ -25,10 +25,17 @@ router
   );
 
 router.patch(
-  "/:productId/toggle",
+  "/:productId/toggle-select",
   authController.protectRoute(),
   authController.restrictTo("customer"),
   cartController.toggleSelectItem
+);
+
+router.patch(
+  "/:productId/quantity",
+  authController.protectRoute(),
+  authController.restrictTo("customer"),
+  cartController.updateQuantity
 );
 
 module.exports = router;

@@ -76,6 +76,33 @@ exports.toggleSelectItem = async (req, res, next) => {
   }
 };
 
+exports.updateQuantity = async (req, res, next) => {
+  const userId = req.user._id.toString();
+  const { productId } = req.params;
+  const { variantId, action } = req.body;
+  try {
+    const { cart, existingItem } = await checkCartAndProduct(
+      userId,
+      productId,
+      variantId
+    );
+
+    if (!cart) throw new AppError("Cart not found", 404);
+    if (!existingItem) throw new AppError("Item not found in cart", 404);
+
+    if (action === "increase") existingItem.quantity++;
+    else if (action === "decrease") existingItem.quantity--;
+
+    await cart.save();
+
+    res.status(200).json({
+      status: "Success",
+      cart,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 exports.addToCart = async (req, res, next) => {
   const userId = req.user._id.toString();
   const { productId } = req.params;
