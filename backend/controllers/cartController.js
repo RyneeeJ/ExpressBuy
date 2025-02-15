@@ -91,7 +91,18 @@ exports.updateQuantity = async (req, res, next) => {
     if (!existingItem) throw new AppError("Item not found in cart", 404);
 
     if (action === "increase") existingItem.quantity++;
-    else if (action === "decrease") existingItem.quantity--;
+    else if (action === "decrease" && existingItem.quantity > 1)
+      existingItem.quantity--;
+    else if (action === "decrease" && existingItem.quantity === 1) {
+      cart.items.pull({ product: productId, variant: variantId });
+
+      // Manually update the cart to be returned because pull doesnt update the cart in memory immediately after saving
+      cart.items = cart.items.filter(
+        (item) =>
+          item.product.toString() !== productId &&
+          item.variant.toString() !== variantId
+      );
+    } else throw new AppError("Invalid action in request body", 400);
 
     await cart.save();
 
