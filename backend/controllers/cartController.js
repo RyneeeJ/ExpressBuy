@@ -146,7 +146,7 @@ exports.updateQuantity = async (req, res, next) => {
   const { productId } = req.params;
   const { variantId, action } = req.body;
   try {
-    const { cart, existingItem } = await checkCartAndProduct(
+    const { cart, existingItem, variant } = await checkCartAndProduct(
       userId,
       productId,
       variantId
@@ -155,12 +155,14 @@ exports.updateQuantity = async (req, res, next) => {
     if (!cart) throw new AppError("Cart not found", 404);
     if (!existingItem) throw new AppError("Item not found in cart", 404);
 
-    if (action === "increase") existingItem.quantity++;
+    if (action === "increase" && existingItem.quantity === variant.stock)
+      throw new AppError("Maximum number of stock limit reached", 400);
+    else if (action === "increase" && existingItem.quantity < variant.stock)
+      existingItem.quantity++;
     else if (action === "decrease" && existingItem.quantity > 1)
       existingItem.quantity--;
     else if (action === "decrease" && existingItem.quantity === 1) {
       cart.items.pull({ product: productId, variant: variantId });
-
       // Manually update the cart to be returned because pull doesnt update the cart in memory immediately after saving
       cart.items = cart.items.filter(
         (item) =>
