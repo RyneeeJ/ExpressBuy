@@ -4,12 +4,18 @@ const authController = require("../controllers/authController");
 const cartController = require("../controllers/cartController");
 const router = express.Router();
 
-router.get(
-  "/",
-  authController.protectRoute(),
-  authController.restrictTo("customer"),
-  cartController.getCartItems
-);
+router
+  .route("/")
+  .get(
+    authController.protectRoute(),
+    authController.restrictTo("customer"),
+    cartController.getCartItems
+  )
+  .delete(
+    authController.protectRoute(),
+    authController.restrictTo("customer"),
+    cartController.clearCart
+  );
 
 router
   .route("/:productId")
@@ -21,7 +27,7 @@ router
   .delete(
     authController.protectRoute(),
     authController.restrictTo("customer"),
-    cartController.removeFromCart
+    cartController.removeItemFromCart
   );
 
 router.patch(
