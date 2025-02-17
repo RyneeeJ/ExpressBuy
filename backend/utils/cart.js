@@ -4,10 +4,13 @@ const AppError = require("./appError");
 
 const checkCartAndProduct = async (userId, productId, variantId) => {
   const cartPromise = Cart.findOne({ user: userId }).select("items");
-  const productPromise = Product.findById(productId).select("variants");
+  const productPromise = Product.findById(productId).select(
+    "variants price name"
+  );
 
   let [cart, product] = await Promise.all([cartPromise, productPromise]);
 
+  if (!cart) cart = await Cart.create({ user: userId, items: [] });
   if (!product) throw new AppError("Product not found", 404);
 
   // check productVariant
@@ -17,10 +20,11 @@ const checkCartAndProduct = async (userId, productId, variantId) => {
   // check if item is already in the cart
   const existingItem = cart.items.find(
     (item) =>
-      item.product.toString() === productId &&
-      item.variant.toString() === variantId
+      item.product.id.toString() === productId &&
+      item.variant.id.toString() === variantId
   );
-  return { cart, variant, existingItem };
+
+  return { cart, variant, existingItem, product };
 };
 
 module.exports = checkCartAndProduct;
