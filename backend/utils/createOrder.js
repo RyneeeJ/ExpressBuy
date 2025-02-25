@@ -2,12 +2,14 @@ const Cart = require("../models/cartModel");
 const Order = require("../models/orderModel");
 const Product = require("../models/productModel");
 const { calculateSelectedTotalPrice } = require("./cart");
+const sendEmail = require("./sendEmail");
 
 const createOrder = async ({
   cartId,
   userId,
   paymentIntent = undefined,
   shippingAddress,
+  email,
 }) => {
   const cart = await Cart.findById(cartId);
 
@@ -38,11 +40,19 @@ const createOrder = async ({
     },
   }));
 
-  await Product.bulkWrite(bulkOperations);
-
   // Delete purchased items from cart
   cart.items.pull({ selected: true });
-  await cart.save();
+
+  await Promise.all([
+    Product.bulkWrite(bulkOperations),
+    cart.save(),
+    // Send notification email to the customer
+    sendEmail({
+      recipient: email,
+      subject: "ExpressBuy Purchase",
+      message: `Thank you for your purchase! Your order ID is ${placedOrder._id}`,
+    }),
+  ]);
 
   return placedOrder;
 };

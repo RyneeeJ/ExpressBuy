@@ -2,7 +2,7 @@ const AppError = require("./appError");
 const createOrder = require("./createOrder");
 
 exports.handlePaymentSuccess = async (paymentIntent) => {
-  const { userId, cartId, shippingAddress } = paymentIntent.metadata;
+  const { userId, cartId, shippingAddress, email } = paymentIntent.metadata;
 
   if (!userId || !cartId)
     throw new AppError("Missing userId or cartId in payment metadata", 400);
@@ -12,6 +12,7 @@ exports.handlePaymentSuccess = async (paymentIntent) => {
     cartId,
     paymentIntent,
     shippingAddress,
+    email,
   });
 
   return placedOrder;

@@ -47,6 +47,7 @@ exports.attemptCheckout = async (req, res, next) => {
         },
         metadata: {
           userId,
+          email: user.email,
           cartId,
           shippingAddress: JSON.stringify(shippingAddress),
         },
@@ -66,6 +67,7 @@ exports.attemptCheckout = async (req, res, next) => {
         userId,
         cartId,
         shippingAddress,
+        email: user.email,
       });
 
       res.status(201).json({
