@@ -2,10 +2,10 @@ const Cart = require("../models/cartModel");
 const Product = require("../models/productModel");
 const AppError = require("./appError");
 
-const checkCartAndProduct = async (userId, productId, variantId) => {
+exports.checkCartAndProduct = async (userId, productId, variantId) => {
   const cartPromise = Cart.findOne({ user: userId }).select("items");
   const productPromise = Product.findById(productId).select(
-    "variants price name"
+    "variants price name primaryImage"
   );
 
   let [cart, product] = await Promise.all([cartPromise, productPromise]);
@@ -27,4 +27,10 @@ const checkCartAndProduct = async (userId, productId, variantId) => {
   return { cart, variant, existingItem, product };
 };
 
-module.exports = checkCartAndProduct;
+exports.calculateSelectedTotalPrice = (cart) => {
+  return cart.items.reduce((sum, item) => {
+    if (!item.selected) return sum;
+
+    return item.price * item.quantity + sum;
+  }, 0);
+};

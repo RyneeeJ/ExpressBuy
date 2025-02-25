@@ -1,7 +1,9 @@
 const Cart = require("../models/cartModel");
-// const Product = require("../models/productModel");
 const AppError = require("../utils/appError");
-const checkCartAndProduct = require("../utils/cart");
+const {
+  checkCartAndProduct,
+  calculateSelectedTotalPrice,
+} = require("../utils/cart");
 
 exports.getCartItems = async (req, res, next) => {
   const userId = req.user._id.toString();
@@ -19,11 +21,7 @@ exports.getCartItems = async (req, res, next) => {
         items: [],
       });
 
-    cart.totalPrice = cart.items.reduce((sum, item) => {
-      if (!item.selected) return sum;
-
-      return item.price * item.quantity + sum;
-    }, 0);
+    cart.totalPrice = calculateSelectedTotalPrice(cart);
 
     res.status(200).json({
       status: "Success",
@@ -60,6 +58,7 @@ exports.addToCart = async (req, res, next) => {
         description: variant.description,
       },
       price: variant.price || product.price,
+      image: variant.variantImage || product.primaryImage,
       quantity: quantity || 1,
     };
 

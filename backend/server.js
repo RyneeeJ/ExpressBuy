@@ -12,11 +12,19 @@ const productRoutes = require("./routes/productRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 
+const orderController = require("./controllers/orderController");
 const app = express();
 
 cloudinary.config({
   secure: true,
 });
+
+// Placed here before bodyparser because request body needs to be in raw format
+app.post(
+  "/api/v1/orders/webhook",
+  express.raw({ type: "application/json" }),
+  orderController.handleStripeWebhook
+);
 
 // body parser
 app.use(express.json());

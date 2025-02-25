@@ -3,14 +3,25 @@ const mongoose = require("mongoose");
 const orderSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    products: [
+    items: [
       {
         product: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Product",
-          required: true,
+          id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Product",
+            required: true,
+          },
+          name: { type: String, required: true }, // This is to store product name for future references if product/variant is deleted in the store database
+        },
+        variant: {
+          id: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+          },
+          description: { type: String, required: true },
         },
         quantity: { type: Number, required: true },
+        image: String,
         price: { type: Number, required: true },
       },
     ],
@@ -20,6 +31,19 @@ const orderSchema = new mongoose.Schema(
       required: true,
       enum: ["Pending", "For Delivery", "Delivered", "Cancelled"],
       default: "Pending",
+    },
+    payment: {
+      method: {
+        type: String,
+        enum: ["Card", "COD"],
+        required: [true, "Please select your mode of payment"],
+      },
+      status: {
+        type: String,
+        enum: ["Paid", "Pending", "Failed"],
+        default: "Pending",
+      },
+      transactionId: String,
     },
     shippingAddress: {
       street: {
@@ -34,10 +58,6 @@ const orderSchema = new mongoose.Schema(
         type: String,
         required: [true, "Please enter your country name"],
       },
-    },
-    orderedAt: {
-      type: Date,
-      default: Date.now(),
     },
   },
   { timestamps: true }
