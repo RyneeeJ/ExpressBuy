@@ -1,6 +1,7 @@
 const Product = require("../models/productModel");
 const AppError = require("../utils/appError");
 
+// Product operations
 exports.addNewProduct = async (req, res, next) => {
   const { name, brand, primaryImage, description, variants, price } = req.body;
   try {
@@ -167,3 +168,5 @@ exports.deleteProduct = async (req, res, next) => {
     next(err);
   }
 };
+
+// Order operations

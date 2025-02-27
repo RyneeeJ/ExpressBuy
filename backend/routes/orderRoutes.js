@@ -9,6 +9,7 @@ router
     authController.protectRoute(),
     authController.restrictTo("customer"),
     orderController.attemptCheckout
-  );
+  )
+  .get(authController.protectRoute(), orderController.getOrders);
 
 module.exports = router;

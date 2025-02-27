@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const Cart = require("../models/cartModel");
+const Order = require("../models/orderModel");
 const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 const { calculateSelectedTotalPrice } = require("../utils/cart");
@@ -109,6 +110,34 @@ exports.handleStripeWebhook = async (req, res, next) => {
 
     // Return a response to acknowledge receipt of the event
     res.status(200).json({ received: true });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getOrders = async (req, res, next) => {
+  try {
+    const queryFilter = {};
+
+    if (req.user.role === "customer") queryFilter.user = req.user._id;
+    let query = Order.find(queryFilter);
+
+    if (req.user.role === "admin")
+      query = query.populate({
+        path: "user",
+        select: "firstName lastName email",
+        options: { strictPopulate: true },
+      });
+
+    const orders = await query.select("-updatedAt -__v -shippingAddress");
+
+    res.status(200).json({
+      status: "Success",
+      result: orders.length,
+      data: {
+        orders,
+      },
+    });
   } catch (err) {
     next(err);
   }
