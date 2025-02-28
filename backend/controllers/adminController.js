@@ -1,6 +1,7 @@
 const Order = require("../models/orderModel");
 const Product = require("../models/productModel");
 const AppError = require("../utils/appError");
+const sendEmail = require("../utils/sendEmail");
 
 // Product operations
 exports.addNewProduct = async (req, res, next) => {
@@ -175,7 +176,10 @@ exports.deleteProduct = async (req, res, next) => {
 exports.updateOrderStatus = async (req, res, next) => {
   const { status } = req.body;
   try {
-    const order = await Order.findById(req.params.orderId);
+    const order = await Order.findById(req.params.orderId).populate({
+      path: "user",
+      select: "email firstName",
+    });
     if (!order) throw new AppError("Order not found", 404);
 
     if (order.status.toLowerCase() === status.toLowerCase())
@@ -186,6 +190,15 @@ exports.updateOrderStatus = async (req, res, next) => {
 
     order.status = status;
     const updatedOrder = await order.save();
+
+    // Send email notification of the updates order status
+    await sendEmail({
+      recipient: updatedOrder.user.email,
+      subject: "ExpressBuy: Order status update",
+      message: `Hi ${updatedOrder.user.firstName},your order with an ID of #${
+        updatedOrder._id
+      } has been ${updatedOrder.status.toLowerCase()}. Thank you for ordering! 😊`,
+    });
 
     res.status(200).json({
       status: "Success",
