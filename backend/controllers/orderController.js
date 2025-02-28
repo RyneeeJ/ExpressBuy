@@ -142,3 +142,27 @@ exports.getOrders = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getOrder = async (req, res, next) => {
+  const { role } = req.user;
+  const { orderId } = req.params;
+  try {
+    const queryFilter = { _id: orderId };
+
+    if (role === "customer") queryFilter.user = req.user._id.toString();
+
+    let query = Order.findOne(queryFilter);
+
+    if (role === "admin")
+      query = query.populate("user", "firstName lastName email");
+    const order = await query;
+
+    if (!order) throw new AppError("Order not found", 404);
+    res.status(200).json({
+      status: "Success",
+      order,
+    });
+  } catch (err) {
+    next(err);
+  }
+};

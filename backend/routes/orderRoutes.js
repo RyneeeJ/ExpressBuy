@@ -12,4 +12,7 @@ router
   )
   .get(authController.protectRoute(), orderController.getOrders);
 
+router
+  .route("/:orderId")
+  .get(authController.protectRoute(), orderController.getOrder);
 module.exports = router;
