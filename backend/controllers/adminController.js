@@ -1,3 +1,4 @@
+const Order = require("../models/orderModel");
 const Product = require("../models/productModel");
 const AppError = require("../utils/appError");
 
@@ -170,3 +171,30 @@ exports.deleteProduct = async (req, res, next) => {
 };
 
 // Order operations
+
+exports.updateOrderStatus = async (req, res, next) => {
+  const { status } = req.body;
+  try {
+    const order = await Order.findById(req.params.orderId);
+    if (!order) throw new AppError("Order not found", 404);
+
+    if (order.status.toLowerCase() === status.toLowerCase())
+      throw new AppError(
+        "Please select an order status different from the current one",
+        400
+      );
+
+    order.status = status;
+    const updatedOrder = await order.save();
+
+    res.status(200).json({
+      status: "Success",
+      message: "Order status updated",
+      data: {
+        order: updatedOrder,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};

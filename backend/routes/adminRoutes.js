@@ -46,4 +46,12 @@ router
     authController.restrictTo("admin"),
     adminController.updateProductVariant
   );
+
+router
+  .route("/orders/:orderId/status")
+  .patch(
+    authController.protectRoute(),
+    authController.restrictTo("admin"),
+    adminController.updateOrderStatus
+  );
 module.exports = router;
