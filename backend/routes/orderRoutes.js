@@ -15,4 +15,10 @@ router
 router
   .route("/:orderId")
   .get(authController.protectRoute(), orderController.getOrder);
+
+router.patch(
+  "/:orderId/cancel",
+  authController.protectRoute(),
+  orderController.cancelOrder
+);
 module.exports = router;

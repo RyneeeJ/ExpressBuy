@@ -1,8 +1,8 @@
 const Cart = require("../models/cartModel");
 const Order = require("../models/orderModel");
-const Product = require("../models/productModel");
 const { calculateSelectedTotalPrice } = require("./cart");
 const sendEmail = require("./sendEmail");
+const updateProductStock = require("./updateProductStock");
 
 const createOrder = async ({
   cartId,
@@ -31,20 +31,12 @@ const createOrder = async ({
 
   const placedOrder = await Order.create(newOrder);
 
-  // Update products' stocks in the db
-  const bulkOperations = selectedItems.map((item) => ({
-    updateOne: {
-      filter: { _id: item.product.id },
-      update: { $inc: { "variants.$[variant].stock": -item.quantity } },
-      arrayFilters: [{ "variant._id": item.variant.id }],
-    },
-  }));
-
   // Delete purchased items from cart
   cart.items.pull({ selected: true });
 
   await Promise.all([
-    Product.bulkWrite(bulkOperations),
+    // Update products' stocks in the db
+    updateProductStock({ itemsArr: selectedItems, addStock: false }),
     cart.save(),
     // Send notification email to the customer
     sendEmail({

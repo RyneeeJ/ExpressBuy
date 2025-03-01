@@ -43,8 +43,8 @@ const orderSchema = new mongoose.Schema(
         enum: ["Paid", "Pending", "Failed"],
         default: "Pending",
       },
-      transactionId: String,
     },
+    transactionId: String,
     shippingAddress: {
       street: {
         type: String,

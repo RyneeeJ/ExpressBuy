@@ -1,12 +1,15 @@
-/* eslint-disable no-console */
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
 const Cart = require("../models/cartModel");
 const Order = require("../models/orderModel");
 const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 const { calculateSelectedTotalPrice } = require("../utils/cart");
 const createOrder = require("../utils/createOrder");
+const refundPayment = require("../utils/refundStripePayment");
+const sendEmail = require("../utils/sendEmail");
 const { handlePaymentSuccess } = require("../utils/stripeHandlers");
+const updateProductStock = require("../utils/updateProductStock");
 
 exports.attemptCheckout = async (req, res, next) => {
   const userId = req.user._id.toString();
@@ -105,6 +108,7 @@ exports.handleStripeWebhook = async (req, res, next) => {
         });
       }
       default:
+        // eslint-disable-next-line no-console
         console.log(`Unhandled event type ${event.type}`);
     }
 
@@ -160,7 +164,52 @@ exports.getOrder = async (req, res, next) => {
     if (!order) throw new AppError("Order not found", 404);
     res.status(200).json({
       status: "Success",
-      order,
+      data: {
+        order,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.cancelOrder = async (req, res, next) => {
+  const { role, _id: userId } = req.user;
+  const { orderId } = req.params;
+  try {
+    const order = await Order.findById(orderId).populate("user", "email");
+
+    if (role === "customer" && userId.toString() !== order.user)
+      throw new AppError(
+        "You can't cancel this order as this does not belong to you",
+        403
+      );
+
+    if (order.status !== "Pending" || order.status === "Cancelled")
+      throw new AppError("Only pending orders can be cancelled", 400);
+
+    if (order.payment.method === "Card" && order.transactionId)
+      await refundPayment(order.transactionId);
+
+    // Restock items in DB
+
+    // Update order status to Cancelled
+    order.status = "Cancelled";
+
+    await Promise.all([
+      updateProductStock({ itemsArr: order.items, addStock: true }),
+      order.save(),
+      sendEmail({
+        recipient: order.user.email,
+        subject: "ExpressBuy Purchase Cancelled",
+        message: `Your order with an ID of ${order._id.toString()} has been cancelled ${
+          order.payment.method === "Card" ? "and payment was refunded" : ""
+        }`,
+      }),
+    ]);
+
+    res.status(200).json({
+      status: "Success",
     });
   } catch (err) {
     next(err);
