@@ -61,4 +61,11 @@ router.get(
   authController.restrictTo("admin"),
   adminController.getOrderStats
 );
+router.get(
+  "/orders/low-stock-products",
+  authController.protectRoute(),
+  authController.restrictTo("admin"),
+  adminController.getLowStockProducts
+);
+
 module.exports = router;

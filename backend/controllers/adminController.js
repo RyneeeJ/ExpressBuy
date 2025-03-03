@@ -3,7 +3,7 @@ const Product = require("../models/productModel");
 const AppError = require("../utils/appError");
 const sendEmail = require("../utils/sendEmail");
 
-// Product operations
+// Product management
 exports.addNewProduct = async (req, res, next) => {
   const { name, brand, primaryImage, description, variants, price } = req.body;
   try {
@@ -60,7 +60,7 @@ exports.updateProductDetails = async (req, res, next) => {
     next(err);
   }
 };
-// TODO: updateProductVariant
+
 exports.updateProductVariant = async (req, res, next) => {
   const { productId, variantId } = req.params;
   const { description, SKU, stock, price } = req.body;
@@ -171,8 +171,7 @@ exports.deleteProduct = async (req, res, next) => {
   }
 };
 
-// Order operations
-
+// Order management
 exports.updateOrderStatus = async (req, res, next) => {
   const { status } = req.body;
   try {
@@ -277,12 +276,44 @@ exports.getOrderStats = async (req, res, next) => {
 
     res.status(200).json({
       status: "Success",
-      message: "Orders stats",
-      successfulOrders,
-      pendingOrders,
-      cancelledOrders,
-      totalRevenue: revenue,
-      mostSoldProducts,
+      data: {
+        successfulOrders,
+        pendingOrders,
+        cancelledOrders,
+        totalRevenue: revenue,
+        mostSoldProducts,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getLowStockProducts = async (req, res, next) => {
+  const lowStockProducts = await Product.aggregate([
+    {
+      $unwind: "$variants",
+    },
+    {
+      $match: {
+        "variants.stock": { $lt: Number(process.env.LOW_STOCK_THRESHOLD) },
+      },
+    },
+    {
+      $project: {
+        name: 1,
+        "variants.description": 1,
+        "variants.SKU": 1,
+        "variants.stock": 1,
+      },
+    },
+  ]);
+
+  try {
+    res.status(200).json({
+      status: "Success",
+      message: "Low stocks",
+      lowStockProducts,
     });
   } catch (err) {
     next(err);
