@@ -54,4 +54,11 @@ router
     authController.restrictTo("admin"),
     adminController.updateOrderStatus
   );
+
+router.get(
+  "/orders/stats",
+  authController.protectRoute(),
+  authController.restrictTo("admin"),
+  adminController.getOrderStats
+);
 module.exports = router;

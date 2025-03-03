@@ -191,12 +191,11 @@ exports.cancelOrder = async (req, res, next) => {
     if (order.payment.method === "Card" && order.transactionId)
       await refundPayment(order.transactionId);
 
-    // Restock items in DB
-
     // Update order status to Cancelled
     order.status = "Cancelled";
 
     await Promise.all([
+      // Restock items in DB
       updateProductStock({ itemsArr: order.items, addStock: true }),
       order.save(),
       sendEmail({

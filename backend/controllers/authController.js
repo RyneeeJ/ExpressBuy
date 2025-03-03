@@ -74,7 +74,7 @@ exports.restrictTo = (role) => {
   return (req, res, next) => {
     if (req.user.role === role) next();
     else
-      next(new AppError("You are not authorized to perform this request", 401));
+      next(new AppError("You are not authorized to perform this request", 403));
   };
 };
 

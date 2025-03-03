@@ -211,3 +211,80 @@ exports.updateOrderStatus = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getOrderStats = async (req, res, next) => {
+  try {
+    const successfulOrdersPromise = Order.countDocuments({
+      status: "Delivered",
+    });
+
+    const pendingOrdersPromise = Order.countDocuments({
+      status: "Pending",
+    });
+
+    const cancelledOrdersPromise = Order.countDocuments({
+      status: "Cancelled",
+    });
+
+    const totalRevenuePromise = Order.aggregate([
+      { $match: { status: "Delivered" } },
+      { $group: { _id: null, revenue: { $sum: "$totalPrice" } } },
+    ]);
+
+    const mostSoldProductsPromise = Order.aggregate([
+      { $match: { status: "Delivered" } },
+      { $unwind: "$items" },
+      {
+        $group: {
+          _id: "$items.product.id",
+          totalSold: { $sum: "$items.quantity" },
+        },
+      },
+      { $sort: { totalSold: -1 } },
+      {
+        $lookup: {
+          from: "products",
+          localField: "_id",
+          foreignField: "_id",
+          as: "productDetails",
+        },
+      },
+      { $unwind: "$productDetails" },
+      {
+        $project: {
+          _id: 1,
+          totalSold: 1,
+          "productDetails.name": 1,
+          "productDetails.price": 1,
+          "productDetails.primaryImage": 1, // If you store product images
+        },
+      },
+    ]);
+
+    const [
+      successfulOrders,
+      pendingOrders,
+      cancelledOrders,
+      [{ revenue }],
+      mostSoldProducts,
+    ] = await Promise.all([
+      successfulOrdersPromise,
+      pendingOrdersPromise,
+      cancelledOrdersPromise,
+      totalRevenuePromise,
+      mostSoldProductsPromise,
+    ]);
+
+    res.status(200).json({
+      status: "Success",
+      message: "Orders stats",
+      successfulOrders,
+      pendingOrders,
+      cancelledOrders,
+      totalRevenue: revenue,
+      mostSoldProducts,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
