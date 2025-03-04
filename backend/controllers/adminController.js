@@ -371,3 +371,44 @@ exports.getUserDetails = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.updateUserRole = async (req, res, next) => {
+  const { userId } = req.params;
+  const { newRole } = req.body;
+  const myId = req.user._id.toString();
+  try {
+    if (myId === userId)
+      throw new AppError("You cannot change your own role", 400);
+
+    const user = await User.findById(userId).select(
+      "firstName lastName email role address"
+    );
+
+    if (!user) throw new AppError("User not found", 404);
+    if (user.role === newRole.toLowerCase())
+      throw new AppError(`User is already assigned the role of '${user.role}'`);
+
+    user.role = newRole.toLowerCase();
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      status: "Success",
+      data: {
+        user: updatedUser,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.deleteUser = async (req, res, next) => {
+  try {
+    res.status(200).json({
+      status: "Success",
+      data: {},
+    });
+  } catch (err) {
+    next(err);
+  }
+};
