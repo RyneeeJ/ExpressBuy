@@ -352,3 +352,22 @@ exports.getAllUsers = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getUserDetails = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.userId).select(
+      "-__v -password"
+    );
+
+    if (!user) throw new AppError("User not found", 404);
+
+    res.status(200).json({
+      status: "Success",
+      data: {
+        user,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};

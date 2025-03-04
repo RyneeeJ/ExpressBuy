@@ -76,4 +76,12 @@ router.get(
   adminController.getAllUsers
 );
 
+router
+  .route("/users/:userId")
+  .get(
+    authController.protectRoute(),
+    authController.restrictTo("admin"),
+    adminController.getUserDetails
+  );
+
 module.exports = router;
