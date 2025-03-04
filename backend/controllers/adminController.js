@@ -1,5 +1,6 @@
 const Order = require("../models/orderModel");
 const Product = require("../models/productModel");
+const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 const sendEmail = require("../utils/sendEmail");
 
@@ -312,8 +313,40 @@ exports.getLowStockProducts = async (req, res, next) => {
   try {
     res.status(200).json({
       status: "Success",
-      message: "Low stocks",
-      lowStockProducts,
+      data: {
+        products: lowStockProducts,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// User management
+exports.getAllUsers = async (req, res, next) => {
+  try {
+    const groupedUsers = await User.aggregate([
+      {
+        $project: {
+          firstName: 1,
+          lastName: 1,
+          email: 1,
+          role: 1,
+        },
+      },
+      {
+        $facet: {
+          admins: [{ $match: { role: "admin" } }],
+          customers: [{ $match: { role: "customer" } }],
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      status: "Success",
+      data: {
+        users: groupedUsers,
+      },
     });
   } catch (err) {
     next(err);
