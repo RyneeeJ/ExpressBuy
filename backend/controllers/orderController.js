@@ -1,6 +1,5 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-const { default: mongoose } = require("mongoose");
 const Cart = require("../models/cartModel");
 const Order = require("../models/orderModel");
 const User = require("../models/userModel");
@@ -11,6 +10,8 @@ const refundPayment = require("../utils/refundStripePayment");
 const sendEmail = require("../utils/sendEmail");
 const { handlePaymentSuccess } = require("../utils/stripeHandlers");
 const updateProductStock = require("../utils/updateProductStock");
+const paginateOrders = require("../utils/paginateQuery");
+const filterOrders = require("../utils/filterOrders");
 
 exports.attemptCheckout = async (req, res, next) => {
   const userId = req.user._id.toString();
@@ -121,32 +122,44 @@ exports.handleStripeWebhook = async (req, res, next) => {
 };
 
 exports.getOrders = async (req, res, next) => {
+  const { sort } = req.query;
   try {
-    const queryFilter = {};
+    // FILTER
+    const queryFilter = await filterOrders({
+      reqQuery: req.query,
+      reqUser: req.user,
+    });
 
-    if (req.user.role === "customer") {
-      queryFilter.user = req.user._id;
-    }
+    // SORT
+    const sortBy = sort || "-createdAt";
 
-    if (req.query.search) {
-      const searchTerm = req.query.search;
+    // PAGINATE
+    const { page, limit, skip, totalPages, totalFilteredProducts } =
+      await paginateOrders({
+        reqQuery: req.query,
+        filter: queryFilter,
+        Model: Order,
+        queryLimit: Number(process.env.ORDERS_PER_PAGE),
+      });
 
-      // If the search term is a valid ObjectId, assume it's an order ID
-      if (mongoose.Types.ObjectId.isValid(searchTerm)) {
-        queryFilter._id = searchTerm;
-      } else if (req.user.role === "admin") {
-        // If it's not an ObjectId, check if it's an email (admins only)
-        const user = await User.findOne({ email: searchTerm }).select("_id");
-        if (user) {
-          queryFilter.user = user._id;
-        } else throw new AppError("No user found with this email", 404);
-      } else
-        throw new AppError(
-          "Customers can only search orders by their order id"
-        );
-    }
+    if (page < 1 || isNaN(page))
+      throw new AppError("Page number must be a positive whole number", 400);
 
-    let query = Order.find(queryFilter);
+    if (page > totalPages)
+      return res.status(200).json({
+        status: "Success",
+        results: 0,
+        data: {
+          products: [],
+        },
+        pagination: {
+          totalPages,
+          currentPage: page,
+          totalResults: totalFilteredProducts,
+        },
+      });
+
+    let query = Order.find(queryFilter).sort(sortBy).skip(skip).limit(limit);
 
     if (req.user.role === "admin")
       query = query.populate({

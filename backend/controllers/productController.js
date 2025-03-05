@@ -1,7 +1,7 @@
 const Product = require("../models/productModel");
 const AppError = require("../utils/appError");
 const filterProducts = require("../utils/filterProducts");
-const paginateProducts = require("../utils/paginateProducts");
+const paginateProducts = require("../utils/paginateQuery");
 
 exports.getAllProducts = async (req, res, next) => {
   try {
@@ -12,7 +12,12 @@ exports.getAllProducts = async (req, res, next) => {
     if (req.query.sort) query = query.sort(req.query.sort);
     // PAGINATE
     const { page, limit, skip, totalPages, totalFilteredProducts } =
-      await paginateProducts(req.query, filter);
+      await paginateProducts({
+        reqQuery: req.query,
+        filter,
+        Model: Product,
+        queryLimit: Number(process.env.PRODUCTS_PER_PAGE),
+      });
 
     if (page < 1 || isNaN(page))
       throw new AppError("Page number must be a positive whole number", 400);
