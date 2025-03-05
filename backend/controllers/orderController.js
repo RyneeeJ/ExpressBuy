@@ -1,5 +1,6 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
+const { default: mongoose } = require("mongoose");
 const Cart = require("../models/cartModel");
 const Order = require("../models/orderModel");
 const User = require("../models/userModel");
@@ -123,7 +124,28 @@ exports.getOrders = async (req, res, next) => {
   try {
     const queryFilter = {};
 
-    if (req.user.role === "customer") queryFilter.user = req.user._id;
+    if (req.user.role === "customer") {
+      queryFilter.user = req.user._id;
+    }
+
+    if (req.query.search) {
+      const searchTerm = req.query.search;
+
+      // If the search term is a valid ObjectId, assume it's an order ID
+      if (mongoose.Types.ObjectId.isValid(searchTerm)) {
+        queryFilter._id = searchTerm;
+      } else if (req.user.role === "admin") {
+        // If it's not an ObjectId, check if it's an email (admins only)
+        const user = await User.findOne({ email: searchTerm }).select("_id");
+        if (user) {
+          queryFilter.user = user._id;
+        } else throw new AppError("No user found with this email", 404);
+      } else
+        throw new AppError(
+          "Customers can only search orders by their order id"
+        );
+    }
+
     let query = Order.find(queryFilter);
 
     if (req.user.role === "admin")
