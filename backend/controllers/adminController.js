@@ -172,6 +172,38 @@ exports.deleteProduct = async (req, res, next) => {
   }
 };
 
+exports.getLowStockProducts = async (req, res, next) => {
+  const lowStockProducts = await Product.aggregate([
+    {
+      $unwind: "$variants",
+    },
+    {
+      $match: {
+        "variants.stock": { $lt: Number(process.env.LOW_STOCK_THRESHOLD) },
+      },
+    },
+    {
+      $project: {
+        name: 1,
+        "variants.description": 1,
+        "variants.SKU": 1,
+        "variants.stock": 1,
+      },
+    },
+  ]);
+
+  try {
+    res.status(200).json({
+      status: "Success",
+      data: {
+        products: lowStockProducts,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 // Order management
 exports.updateOrderStatus = async (req, res, next) => {
   const { status } = req.body;
@@ -283,38 +315,6 @@ exports.getOrderStats = async (req, res, next) => {
         cancelledOrders,
         totalRevenue: revenue,
         mostSoldProducts,
-      },
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
-exports.getLowStockProducts = async (req, res, next) => {
-  const lowStockProducts = await Product.aggregate([
-    {
-      $unwind: "$variants",
-    },
-    {
-      $match: {
-        "variants.stock": { $lt: Number(process.env.LOW_STOCK_THRESHOLD) },
-      },
-    },
-    {
-      $project: {
-        name: 1,
-        "variants.description": 1,
-        "variants.SKU": 1,
-        "variants.stock": 1,
-      },
-    },
-  ]);
-
-  try {
-    res.status(200).json({
-      status: "Success",
-      data: {
-        products: lowStockProducts,
       },
     });
   } catch (err) {
