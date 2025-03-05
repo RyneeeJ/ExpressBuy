@@ -354,10 +354,9 @@ exports.getAllUsers = async (req, res, next) => {
 };
 
 exports.getUserDetails = async (req, res, next) => {
+  const { userId } = req.params;
   try {
-    const user = await User.findById(req.params.userId).select(
-      "-__v -password"
-    );
+    const user = await User.findById(userId).select("-__v -password");
 
     if (!user) throw new AppError("User not found", 404);
 
@@ -403,10 +402,12 @@ exports.updateUserRole = async (req, res, next) => {
 };
 
 exports.deleteUser = async (req, res, next) => {
+  const { userId } = req.params;
   try {
-    res.status(200).json({
+    await User.findByIdAndDelete(userId);
+
+    res.status(204).json({
       status: "Success",
-      data: {},
     });
   } catch (err) {
     next(err);
