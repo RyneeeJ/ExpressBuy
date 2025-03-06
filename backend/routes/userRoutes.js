@@ -5,5 +5,8 @@ const userController = require("../controllers/userController");
 
 const router = express.Router();
 
-router.route("/me").get(authController.protectRoute(), userController.getMe);
+router
+  .route("/me")
+  .get(authController.protectRoute(), userController.getMe)
+  .patch(authController.protectRoute(), userController.updateProfileDetails);
 module.exports = router;
