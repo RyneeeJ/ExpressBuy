@@ -46,3 +46,39 @@ exports.createReview = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.updateReview = async (req, res, next) => {
+  const userId = req.user._id.toString();
+  const { productId, reviewId } = req.params;
+  const { updatedRating, updatedComment } = req.body;
+  try {
+    // check if this review belongs to the user
+
+    const review = await Review.findOne({
+      user: userId,
+      product: productId,
+      _id: reviewId,
+    });
+
+    if (!review) throw new AppError("This review could not be found", 404);
+
+    if (!updatedComment && !updatedRating)
+      throw new AppError(
+        "Please make changes to either the comment or rating to update this review",
+        400
+      );
+
+    if (updatedRating) review.rating = updatedRating;
+    if (updatedComment) review.comment = updatedComment;
+
+    const updatedReview = await review.save({ validateBeforeSave: true });
+    res.status(200).json({
+      status: "Success",
+      data: {
+        review: updatedReview,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};

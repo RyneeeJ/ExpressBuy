@@ -16,4 +16,12 @@ router
     reviewController.createReview
   );
 
+router
+  .route("/:productId/reviews/:reviewId")
+  .patch(
+    authController.protectRoute(),
+    authController.restrictTo("customer"),
+    reviewController.updateReview
+  );
+
 module.exports = router;
