@@ -1,6 +1,7 @@
 const Order = require("../models/orderModel");
 const Review = require("../models/reviewModel");
 const AppError = require("../utils/appError");
+const updateAverageRating = require("../utils/updateAverageRating");
 
 exports.createReview = async (req, res, next) => {
   const userId = req.user._id.toString();
@@ -36,6 +37,8 @@ exports.createReview = async (req, res, next) => {
       comment,
       rating,
     });
+
+    await updateAverageRating(productId);
     res.status(200).json({
       status: "Success",
       data: {
@@ -72,6 +75,9 @@ exports.updateReview = async (req, res, next) => {
     if (updatedComment) review.comment = updatedComment;
 
     const updatedReview = await review.save({ validateBeforeSave: true });
+
+    await updateAverageRating(productId);
+
     res.status(200).json({
       status: "Success",
       data: {
@@ -92,6 +98,9 @@ exports.deleteReview = async (req, res, next) => {
       product: productId,
       _id: reviewId,
     });
+
+    await updateAverageRating(productId);
+
     res.status(204).json({
       status: "Success",
     });

@@ -70,11 +70,11 @@ const productSchema = new mongoose.Schema(
         message: "At least one variant is required",
       },
     },
-    ratingsAverage: {
+    averageRating: {
       type: Number,
-      min: 1,
-      max: 5,
+      default: 0,
     },
+    numReviews: { type: Number, default: 0 },
     isFeatured: {
       type: Boolean,
       default: false,

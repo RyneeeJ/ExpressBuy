@@ -21,7 +21,6 @@ const createOrder = async ({
     totalPrice: calculateSelectedTotalPrice(cart),
     payment: {
       method: paymentIntent ? "Card" : "COD",
-      status: paymentIntent ? "Paid" : "Pending",
     },
     shippingAddress: paymentIntent
       ? JSON.parse(shippingAddress)

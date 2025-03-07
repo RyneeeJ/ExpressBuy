@@ -38,11 +38,6 @@ const orderSchema = new mongoose.Schema(
         enum: ["Card", "COD"],
         required: [true, "Please select your mode of payment"],
       },
-      status: {
-        type: String,
-        enum: ["Paid", "Pending", "Failed"],
-        default: "Pending",
-      },
     },
     transactionId: String,
     shippingAddress: {
