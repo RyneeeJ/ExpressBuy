@@ -99,3 +99,39 @@ exports.deleteReview = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getAllReviews = async (req, res, next) => {
+  const { productId } = req.params;
+  try {
+    const reviews = await Review.find({ product: productId }).sort(
+      "-createdAt"
+    );
+
+    res.status(200).json({
+      status: "Success",
+      results: reviews.length,
+      data: {
+        reviews,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+exports.getLimitedReviews = async (req, res, next) => {
+  const { productId } = req.params;
+  try {
+    const reviews = await Review.find({ product: productId })
+      .sort("-createdAt")
+      .limit(3);
+
+    res.status(200).json({
+      status: "Success",
+      data: {
+        reviews,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};

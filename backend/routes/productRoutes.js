@@ -16,12 +16,28 @@ router
     reviewController.createReview
   );
 
+router.get(
+  "/:productId/reviews/all",
+  authController.protectRoute(),
+  reviewController.getAllReviews
+);
+router.get(
+  "/:productId/reviews/limited",
+  authController.protectRoute(),
+  reviewController.getLimitedReviews
+);
+
 router
   .route("/:productId/reviews/:reviewId")
   .patch(
     authController.protectRoute(),
     authController.restrictTo("customer"),
     reviewController.updateReview
+  )
+  .delete(
+    authController.protectRoute(),
+    authController.restrictTo("customer"),
+    reviewController.deleteReview
   );
 
 module.exports = router;
