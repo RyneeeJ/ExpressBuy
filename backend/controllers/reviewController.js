@@ -82,3 +82,20 @@ exports.updateReview = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.deleteReview = async (req, res, next) => {
+  const userId = req.user._id.toString();
+  const { productId, reviewId } = req.params;
+  try {
+    await Review.findOneAndDelete({
+      user: userId,
+      product: productId,
+      _id: reviewId,
+    });
+    res.status(204).json({
+      status: "Success",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
