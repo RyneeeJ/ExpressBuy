@@ -21,5 +21,6 @@ router
 
 router
   .route("/me/address/:addressId")
-  .delete(authController.protectRoute(), userController.deleteAddress);
+  .delete(authController.protectRoute(), userController.deleteAddress)
+  .patch(authController.protectRoute(), userController.editAddress);
 module.exports = router;

@@ -73,22 +73,22 @@ exports.changePassword = async (req, res, next) => {
 
 exports.addAddress = async (req, res, next) => {
   const userId = req.user._id;
-  const { street, city, country } = req.body;
+  const { street, city, barangay } = req.body;
   try {
     const user = await User.findById(userId);
 
-    if (!street || !city || !country)
+    if (!street || !city || !barangay)
       throw new AppError(
-        "Please provide all required fields: street, city, and country."
+        "Please provide all required fields: street, barangay, and city/province name."
       );
 
-    user.address.push({ street, city, country });
+    user.address.push({ street, city, barangay });
     const updatedUser = await user.save({ validateModifiedOnly: true });
 
     res.status(200).json({
       status: "Success",
       data: {
-        address: updatedUser.address,
+        user: updatedUser,
       },
     });
   } catch (err) {
@@ -106,6 +106,38 @@ exports.deleteAddress = async (req, res, next) => {
     await user.save({ validateModifiedOnly: true });
     res.status(204).json({
       status: "Success",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.editAddress = async (req, res, next) => {
+  const userId = req.user._id;
+  const { addressId } = req.params; // Address ID from URL params
+  const { street, city, barangay } = req.body; // Fields to update
+  try {
+    if (!street && !city && !barangay)
+      throw new AppError("Could not update address with empty fields", 400);
+
+    let updateFields = {};
+
+    // Conditionally add fields if they exist in the request body
+    if (street) updateFields["address.$.street"] = street;
+    if (barangay) updateFields["address.$.barangay"] = barangay;
+    if (city) updateFields["address.$.city"] = city;
+
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId, "address._id": addressId }, // Find user & specific address
+      { $set: updateFields },
+      { new: true, runValidators: true } // Return updated document & validate fields
+    );
+
+    res.status(200).json({
+      status: "Success",
+      data: {
+        user: updatedUser,
+      },
     });
   } catch (err) {
     next(err);

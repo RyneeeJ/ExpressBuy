@@ -63,13 +63,13 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: [true, "Please enter your street name"],
           },
+          barangay: {
+            type: String,
+            required: [true, "Please enter your barangay"],
+          },
           city: {
             type: String,
             required: [true, "Please enter your city/province name"],
-          },
-          country: {
-            type: String,
-            required: [true, "Please enter your country name"],
           },
         },
       ],
