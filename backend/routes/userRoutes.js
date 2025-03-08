@@ -15,4 +15,7 @@ router.patch(
   authController.protectRoute(),
   userController.changePassword
 );
+router
+  .route("/me/address")
+  .post(authController.protectRoute(), userController.addAddress);
 module.exports = router;

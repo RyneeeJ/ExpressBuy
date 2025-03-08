@@ -2,7 +2,7 @@ const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 
 exports.getMe = async (req, res, next) => {
-  const userId = req.user._id.toString();
+  const userId = req.user._id;
   try {
     const user = await User.findById(userId).select("-updatedAt -__v");
 
@@ -18,7 +18,7 @@ exports.getMe = async (req, res, next) => {
 };
 
 exports.updateProfileDetails = async (req, res, next) => {
-  const userId = req.user._id.toString();
+  const userId = req.user._id;
   const { newFirstName, newLastName } = req.body;
   try {
     if (!newFirstName || !newLastName)
@@ -42,7 +42,7 @@ exports.updateProfileDetails = async (req, res, next) => {
 };
 
 exports.changePassword = async (req, res, next) => {
-  const userId = req.user._id.toString();
+  const userId = req.user._id;
   const { currentPassword, newPassword, newPasswordConfirm } = req.body;
   try {
     const user = await User.findById(userId).select("+password");
@@ -65,6 +65,31 @@ exports.changePassword = async (req, res, next) => {
     res.status(200).json({
       status: "Success",
       message: "Password successfully changed!",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.addAddress = async (req, res, next) => {
+  const userId = req.user._id;
+  const { street, city, country } = req.body;
+  try {
+    const user = await User.findById(userId);
+
+    if (!street || !city || !country)
+      throw new AppError(
+        "Please provide all required fields: street, city, and country."
+      );
+
+    user.address.push({ street, city, country });
+    const updatedUser = await user.save({ validateModifiedOnly: true });
+
+    res.status(200).json({
+      status: "Success",
+      data: {
+        address: updatedUser.address,
+      },
     });
   } catch (err) {
     next(err);

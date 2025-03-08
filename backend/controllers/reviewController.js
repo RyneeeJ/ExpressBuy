@@ -4,7 +4,7 @@ const AppError = require("../utils/appError");
 const updateAverageRating = require("../utils/updateAverageRating");
 
 exports.createReview = async (req, res, next) => {
-  const userId = req.user._id.toString();
+  const userId = req.user._id;
   const { productId } = req.params;
   const { comment, rating } = req.body;
   try {
@@ -51,7 +51,7 @@ exports.createReview = async (req, res, next) => {
 };
 
 exports.updateReview = async (req, res, next) => {
-  const userId = req.user._id.toString();
+  const userId = req.user._id;
   const { productId, reviewId } = req.params;
   const { updatedRating, updatedComment } = req.body;
   try {
@@ -90,7 +90,7 @@ exports.updateReview = async (req, res, next) => {
 };
 
 exports.deleteReview = async (req, res, next) => {
-  const userId = req.user._id.toString();
+  const userId = req.user._id;
   const { productId, reviewId } = req.params;
   try {
     await Review.findOneAndDelete({
@@ -112,9 +112,9 @@ exports.deleteReview = async (req, res, next) => {
 exports.getAllReviews = async (req, res, next) => {
   const { productId } = req.params;
   try {
-    const reviews = await Review.find({ product: productId }).sort(
-      "-createdAt"
-    );
+    const reviews = await Review.find({ product: productId })
+      .sort("-createdAt")
+      .populate({ path: "user", select: "email firstName lastName" });
 
     res.status(200).json({
       status: "Success",
