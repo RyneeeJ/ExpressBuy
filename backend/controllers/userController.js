@@ -95,3 +95,19 @@ exports.addAddress = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.deleteAddress = async (req, res, next) => {
+  const userId = req.user._id;
+  const { addressId } = req.params;
+  try {
+    const user = await User.findById(userId);
+
+    user.address.pull(addressId);
+    await user.save({ validateModifiedOnly: true });
+    res.status(204).json({
+      status: "Success",
+    });
+  } catch (err) {
+    next(err);
+  }
+};

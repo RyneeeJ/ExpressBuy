@@ -18,4 +18,8 @@ router.patch(
 router
   .route("/me/address")
   .post(authController.protectRoute(), userController.addAddress);
+
+router
+  .route("/me/address/:addressId")
+  .delete(authController.protectRoute(), userController.deleteAddress);
 module.exports = router;
