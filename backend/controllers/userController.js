@@ -1,3 +1,4 @@
+const Product = require("../models/productModel");
 const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 
@@ -137,6 +138,53 @@ exports.editAddress = async (req, res, next) => {
       status: "Success",
       data: {
         user: updatedUser,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.addWishlist = async (req, res, next) => {
+  const userId = req.user._id;
+  const { productId, variantId } = req.params;
+
+  try {
+    const productPromise = Product.findById(productId).select("variants");
+    const userPromise = User.findById(userId);
+
+    const [product, user] = await Promise.all([productPromise, userPromise]);
+    if (!product) throw new AppError("Product not found", 404);
+
+    const variantExists = product.variants.some(
+      (v) => v._id.toString() === variantId
+    );
+
+    if (!variantExists)
+      throw new AppError(
+        "The product does not contain this specific variant",
+        400
+      );
+
+    const exists = user.wishlist.some(
+      (item) =>
+        item.product.toString() === productId &&
+        item.variant.toString() === variantId
+    );
+
+    if (exists)
+      throw new AppError(
+        "This product variant is already in your wishlist",
+        400
+      );
+
+    user.wishlist.push({ product: productId, variant: variantId });
+    await user.save({ validateModifiedOnly: true });
+
+    res.status(201).json({
+      status: "Success",
+      data: {
+        wishlist: user.wishlist,
       },
     });
   } catch (err) {

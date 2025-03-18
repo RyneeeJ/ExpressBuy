@@ -23,4 +23,12 @@ router
   .route("/me/address/:addressId")
   .delete(authController.protectRoute(), userController.deleteAddress)
   .patch(authController.protectRoute(), userController.editAddress);
+
+router
+  .route("/me/wishlist/:productId/:variantId")
+  .post(
+    authController.protectRoute(),
+    authController.restrictTo("customer"),
+    userController.addWishlist
+  );
 module.exports = router;
