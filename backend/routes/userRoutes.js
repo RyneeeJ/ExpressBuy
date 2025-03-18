@@ -30,5 +30,10 @@ router
     authController.protectRoute(),
     authController.restrictTo("customer"),
     userController.addWishlist
+  )
+  .delete(
+    authController.protectRoute(),
+    authController.restrictTo("customer"),
+    userController.removeFromWishlist
   );
 module.exports = router;

@@ -191,3 +191,21 @@ exports.addWishlist = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.removeFromWishlist = async (req, res, next) => {
+  const userId = req.user._id;
+  const { productId, variantId } = req.params;
+
+  try {
+    const user = await User.findById(userId);
+    user.wishlist.pull({ product: productId, variant: variantId });
+
+    await user.save({ validateModifiedOnly: true });
+
+    res.status(204).json({
+      status: "Success",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
