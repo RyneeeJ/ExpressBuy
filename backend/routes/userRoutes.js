@@ -36,4 +36,11 @@ router
     authController.restrictTo("customer"),
     userController.removeFromWishlist
   );
+
+router.delete(
+  "/me/wishlist/clear",
+  authController.protectRoute(),
+  authController.restrictTo("customer"),
+  userController.clearWishlist
+);
 module.exports = router;

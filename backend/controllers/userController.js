@@ -209,3 +209,23 @@ exports.removeFromWishlist = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.clearWishlist = async (req, res, next) => {
+  const userId = req.user._id;
+  try {
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $set: { wishlist: [] } },
+      { new: true }
+    );
+
+    res.status(200).json({
+      status: "Success",
+      data: {
+        wishlist: user.wishlist,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
