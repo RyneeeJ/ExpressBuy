@@ -24,6 +24,12 @@ router
   .delete(authController.protectRoute(), userController.deleteAddress)
   .patch(authController.protectRoute(), userController.editAddress);
 
+router.patch(
+  "/me/address/:addressId/set-default",
+  authController.protectRoute(),
+  userController.setDefaultAddress
+);
+
 router
   .route("/me/wishlist/:productId/:variantId")
   .post(

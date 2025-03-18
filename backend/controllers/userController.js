@@ -74,7 +74,7 @@ exports.changePassword = async (req, res, next) => {
 
 exports.addAddress = async (req, res, next) => {
   const userId = req.user._id;
-  const { street, city, barangay } = req.body;
+  const { street, city, barangay, isDefault } = req.body;
   try {
     const user = await User.findById(userId);
 
@@ -83,7 +83,16 @@ exports.addAddress = async (req, res, next) => {
         "Please provide all required fields: street, barangay, and city/province name."
       );
 
-    user.address.push({ street, city, barangay });
+    if (isDefault) {
+      user.address.forEach((addr) => (addr.isDefault = false));
+    }
+    user.address.push({
+      street,
+      city,
+      barangay,
+      isDefault,
+    });
+
     const updatedUser = await user.save({ validateModifiedOnly: true });
 
     res.status(200).json({
@@ -139,6 +148,35 @@ exports.editAddress = async (req, res, next) => {
       data: {
         user: updatedUser,
       },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.setDefaultAddress = async (req, res, next) => {
+  const userId = req.user.id; // Assuming user is authenticated
+  const { addressId } = req.params;
+  try {
+    const user = await User.findById(userId);
+
+    const addressIndex = user.address.findIndex(
+      (addr) => addr._id.toString() === addressId
+    );
+
+    if (addressIndex === -1) throw new AppError("Address not found", 404);
+
+    // Update the address array
+    // **Step 1:** Set all addresses' isDefault to false
+    user.address.forEach((addr) => (addr.isDefault = false));
+
+    // **Step 2:** Set the selected address as default
+    user.address[addressIndex].isDefault = true;
+
+    await user.save({ validateModifiedOnly: true });
+    res.status(200).json({
+      status: "Success",
+      message: "Default address updated successfully!",
     });
   } catch (err) {
     next(err);

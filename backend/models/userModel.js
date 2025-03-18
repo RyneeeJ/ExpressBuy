@@ -8,6 +8,13 @@ const jwt = require("jsonwebtoken");
 const sendEmail = require("../utils/sendEmail");
 const AppError = require("../utils/appError");
 
+const addressSchema = new mongoose.Schema({
+  street: { type: String, required: true },
+  barangay: { type: String, required: true },
+  city: { type: String, required: true },
+  isDefault: { type: Boolean, default: false },
+});
+
 const userSchema = new mongoose.Schema(
   {
     firstName: {
@@ -63,25 +70,7 @@ const userSchema = new mongoose.Schema(
         },
       },
     ],
-    address: {
-      type: [
-        {
-          street: {
-            type: String,
-            required: [true, "Please enter your street name"],
-          },
-          barangay: {
-            type: String,
-            required: [true, "Please enter your barangay"],
-          },
-          city: {
-            type: String,
-            required: [true, "Please enter your city/province name"],
-          },
-        },
-      ],
-      default: [],
-    },
+    address: [addressSchema],
     verified: {
       type: Boolean,
       default: false,
