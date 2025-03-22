@@ -99,9 +99,12 @@ exports.signup = async (req, res, next) => {
     password,
     passwordConfirm,
     role: req.role || "customer",
+    address: [],
   };
   // Add address field to userRequest object if it exists (for customers)
-  if (req.body.address) userRequest.address = req.body.address;
+  if (req.body.address) {
+    userRequest.address.push({ ...req.body.address, isDefault: true });
+  }
 
   try {
     const newUser = await User.create(userRequest);
