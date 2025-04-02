@@ -1,9 +1,16 @@
+import { BrowserRouter, Route, Routes } from "react-router";
+import AppLayout from "./ui/AppLayout";
+import HomePage from "./pages/HomePage";
+
 function App() {
   return (
-    <div>
-      <div>Hello World</div>
-      <button className="btn btn-secondary">Button</button>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<AppLayout />}>
+          <Route index element={<HomePage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
