@@ -6,6 +6,7 @@ const reviewController = require("../controllers/reviewController");
 const router = express.Router();
 
 router.get("/", productController.getAllProducts);
+router.get("/categories", productController.getProductCategories);
 router.route("/:productId").get(productController.getProduct);
 
 router

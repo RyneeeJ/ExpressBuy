@@ -1,6 +1,7 @@
 const caseInsensitiveFilter = (filter, reqQuery, field) => {
+  const match = reqQuery[field].replaceAll("-", " ");
   filter[field] = {
-    $regex: `^${reqQuery[field]}$`,
+    $regex: `^${match}$`,
     $options: "i",
   };
 };

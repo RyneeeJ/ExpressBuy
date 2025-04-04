@@ -39,7 +39,7 @@ exports.getAllProducts = async (req, res, next) => {
     query = query.skip(skip).limit(limit);
     // Fetch query
     const products = await query.select(
-      "primaryImage name price isFeatured isInStock"
+      "primaryImage name price isFeatured isInStock category brand"
     );
 
     res.status(200).json({
@@ -47,6 +47,7 @@ exports.getAllProducts = async (req, res, next) => {
       results: products.length,
       data: {
         products,
+        category: req.query,
       },
     });
   } catch (err) {
@@ -63,6 +64,25 @@ exports.getProduct = async (req, res, next) => {
       status: "Success",
       data: {
         product,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getProductCategories = async (req, res, next) => {
+  try {
+    const categories = await Product.distinct("category");
+
+    const categoriesFinal = categories.map((c) => ({
+      label: c,
+      path: c.toLowerCase().replaceAll(" ", "-"),
+    }));
+    res.status(200).json({
+      status: "Success",
+      data: {
+        categories: categoriesFinal,
       },
     });
   } catch (err) {
