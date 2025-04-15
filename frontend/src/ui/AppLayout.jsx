@@ -6,8 +6,10 @@ import SidebarNav from "./SidebarNav";
 const AppLayout = () => {
   const location = useLocation();
   const path = location.pathname;
+
   const isSidebarVisible =
     path === "/" || path === "/products" || path.startsWith("/profile");
+  const isProfilePage = path.startsWith("/profile");
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
@@ -18,6 +20,7 @@ const AppLayout = () => {
     <div className="mx-auto flex min-h-screen max-w-7xl flex-col">
       <Header onToggleSidebar={toggleDrawer} />
       <SidebarNav
+        isProfilePage={isProfilePage}
         isSidebarVisible={isSidebarVisible}
         isDrawerOpen={isDrawerOpen}
         closeDrawer={closeDrawer}

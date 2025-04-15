@@ -6,6 +6,10 @@ import HomePage from "./pages/HomePage";
 import ProductsPage from "./pages/ProductsPage";
 import ProfilePage from "./pages/ProfilePage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
+import AddressesPage from "./pages/AddressesPage";
+import OrdersPage from "./pages/OrdersPage";
+import Wishlist from "./pages/Wishlist";
+import ChangePasswordPage from "./pages/ChangePasswordPage";
 
 const queryClient = new QueryClient();
 function App() {
@@ -21,6 +25,13 @@ function App() {
               element={<ProductDetailsPage />}
             />
             <Route path="profile" element={<ProfilePage />} />
+            <Route path="profile/addresses" element={<AddressesPage />} />
+            <Route path="profile/orders" element={<OrdersPage />} />
+            <Route path="profile/wishlist" element={<Wishlist />} />
+            <Route
+              path="profile/change-password"
+              element={<ChangePasswordPage />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

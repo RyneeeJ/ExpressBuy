@@ -1,6 +1,13 @@
 import { Outlet } from "react-router";
+import ProductsSidebarLinks from "./ProductsSidebarLinks";
+import ProfileSidebarLinks from "./ProfileSidebarLinks";
 
-const SidebarNav = ({ isSidebarVisible, isDrawerOpen, closeDrawer }) => {
+const SidebarNav = ({
+  isSidebarVisible,
+  isDrawerOpen,
+  closeDrawer,
+  isProfilePage,
+}) => {
   return (
     <div className="flex flex-1">
       {/* Sidebar - visible on desktop, drawer on mobile */}
@@ -8,7 +15,7 @@ const SidebarNav = ({ isSidebarVisible, isDrawerOpen, closeDrawer }) => {
         <div>
           {/* Desktop sidebar */}
           <aside className="bg-base-200 hidden h-full w-64 p-4 lg:block">
-            <div>Sidebar here</div>
+            {isProfilePage ? <ProfileSidebarLinks /> : <ProductsSidebarLinks />}
           </aside>
 
           {/* Mobile drawer sidebar */}
@@ -22,7 +29,7 @@ const SidebarNav = ({ isSidebarVisible, isDrawerOpen, closeDrawer }) => {
           />
 
           <aside
-            className={`bg-base-100 fixed top-0 right-0 z-50 h-full w-64 transform p-4 shadow transition-transform lg:hidden ${
+            className={`bg-base-200 fixed top-0 right-0 z-50 h-full w-64 transform p-4 shadow transition-transform lg:hidden ${
               isDrawerOpen ? "translate-x-0" : "translate-x-full"
             }`}
           >
@@ -37,7 +44,7 @@ const SidebarNav = ({ isSidebarVisible, isDrawerOpen, closeDrawer }) => {
               </button>
             </div>
             {/* Sidebar content */}
-            <div>Sidebar here</div>
+            {isProfilePage ? <ProfileSidebarLinks /> : <ProductsSidebarLinks />}
           </aside>
         </div>
       )}

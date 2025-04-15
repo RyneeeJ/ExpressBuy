@@ -1,10 +1,11 @@
+import { Link } from "react-router";
 import HeaderLinks from "./HeaderLinks";
 import SearchBar from "./SearchBar";
 
 const Header = ({ onToggleSidebar }) => {
   return (
     <header className="flex items-center justify-between py-4">
-      <div>ExpressBuy</div>
+      <Link to="/">ExpressBuy</Link>
       <SearchBar />
       <HeaderLinks />
 
