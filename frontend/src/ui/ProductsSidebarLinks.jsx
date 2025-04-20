@@ -1,30 +1,13 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import SidebarNavLinks from "./SidebarNavLinks";
-
-const fetchCategories = async () => {
-  try {
-    const res = await axios.get("/api/v1/products/categories");
-    return res.data;
-  } catch (err) {
-    console.error("Error fetching categories 💥💥💥", err);
-    return [];
-  }
-};
+import useProductCategories from "../features/products/api/useProductCategories";
 
 const ProductsSidebarLinks = () => {
-  const [categories, setCategories] = useState([]);
-  useEffect(() => {
-    const loadCategories = async () => {
-      const res = await fetchCategories();
-      const finalCategories = [...res.data.categories];
-      finalCategories.unshift({ label: "All Products", category: "all" });
+  const { categories, error, status } = useProductCategories();
 
-      setCategories(finalCategories);
-    };
+  if (status === "pending") return <div>LOADING....</div>;
+  if (error)
+    return <div>There was an error in fetching product categories</div>;
 
-    loadCategories();
-  }, []);
   return <SidebarNavLinks links={categories} isProfilePage={false} />;
 };
 

@@ -1,4 +1,4 @@
-import FeaturedProducts from "../features/products/FeaturedProducts";
+import FeaturedProducts from "../features/products/components/FeaturedProducts";
 import Testimonials from "../ui/Testimonials";
 
 const HomePage = () => {

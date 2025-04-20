@@ -77,7 +77,10 @@ exports.getProductCategories = async (req, res, next) => {
 
     const categoriesFinal = categories.map((c) => ({
       label: c,
-      path: c.toLowerCase().replaceAll(" ", "-"),
+      category: `${c
+        .toLowerCase()
+        .replaceAll(" ", "-")
+        .replaceAll("&", "%26")}`,
     }));
     res.status(200).json({
       status: "Success",
