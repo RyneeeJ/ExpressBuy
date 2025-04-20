@@ -8,7 +8,7 @@ import ProfilePage from "./pages/ProfilePage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import AddressesPage from "./pages/AddressesPage";
 import OrdersPage from "./pages/OrdersPage";
-import Wishlist from "./pages/Wishlist";
+import Wishlist from "./pages/WishlistPage";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
 
 const queryClient = new QueryClient();

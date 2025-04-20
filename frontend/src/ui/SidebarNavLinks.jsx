@@ -6,7 +6,7 @@ const SidebarNavLinks = ({ links, isProfilePage }) => {
 
   const navigate = useNavigate();
   const handleCategoryClick = (path) => navigate(`/products?category=${path}`);
-  console.log(links);
+
   return (
     <ul className="menu bg-base-200 text-base-content min-h-full w-full p-0">
       {links.map((link) => (
