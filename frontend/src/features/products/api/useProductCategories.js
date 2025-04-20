@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
 
 const fetchCategories = async () => {
   try {
@@ -8,25 +7,27 @@ const fetchCategories = async () => {
     return res.data;
   } catch (err) {
     console.error("Error fetching categories 💥💥💥", err);
-    return [];
+    throw err;
   }
 };
 
 const useProductCategories = () => {
-  const [categories, setCategories] = useState([]);
   const { data, status, error } = useQuery({
-    queryKey: ["product-category"],
+    queryKey: ["product-categories"],
     queryFn: fetchCategories,
+    select: (data) => {
+      // Transform data immediately after fetch
+      return [
+        { label: "All Products", category: "all" },
+        ...data.data.categories,
+      ];
+    },
+    onError: (error) => {
+      console.error("Categories fetch failed:", error);
+    },
   });
 
-  useEffect(() => {
-    if (!data) return;
-    const finalCategories = [...data.data.categories];
-    finalCategories.unshift({ label: "All Products", category: "all" });
-    setCategories(finalCategories);
-  }, [data]);
-
-  return { categories, status, error };
+  return { data, status, error };
 };
 
 export default useProductCategories;
