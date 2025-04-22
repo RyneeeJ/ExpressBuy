@@ -47,7 +47,7 @@ exports.getAllProducts = async (req, res, next) => {
       results: products.length,
       data: {
         products,
-        category: req.query,
+        filter: req.query,
       },
     });
   } catch (err) {

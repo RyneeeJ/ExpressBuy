@@ -1,5 +1,19 @@
+import useProducts from "../features/products/api/useProducts";
+import ProductList from "../features/products/components/ProductList";
+
 const ProductsPage = () => {
-  return <div>Products here</div>;
+  const { data, error, status } = useProducts();
+  if (status === "pending") return <div>Loading products...</div>;
+  if (error) {
+    console.log(error);
+    return <div>There was an error fetching the products...</div>;
+  }
+  console.log("products", data.data.products);
+  return (
+    <div>
+      <ProductList products={data.data.products} />
+    </div>
+  );
 };
 
 export default ProductsPage;

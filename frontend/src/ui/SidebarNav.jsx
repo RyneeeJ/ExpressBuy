@@ -9,7 +9,7 @@ const SidebarNav = ({
   isProfilePage,
 }) => {
   return (
-    <div className="flex flex-1">
+    <div className="flex flex-1 overflow-y-auto">
       {/* Sidebar - visible on desktop, drawer on mobile */}
       {isSidebarVisible && (
         <div>
@@ -50,7 +50,7 @@ const SidebarNav = ({
       )}
 
       {/* Page content */}
-      <main className="flex-1 p-4">
+      <main className="h-full overflow-auto p-4">
         <Outlet />
       </main>
     </div>

@@ -17,7 +17,7 @@ const AppLayout = () => {
   const closeDrawer = () => setDrawerOpen(false);
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-7xl flex-col">
+    <div className="mx-auto flex h-screen max-w-7xl flex-col">
       <Header onToggleSidebar={toggleDrawer} />
       <SidebarNav
         isProfilePage={isProfilePage}
