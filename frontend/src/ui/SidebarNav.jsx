@@ -50,7 +50,7 @@ const SidebarNav = ({
       )}
 
       {/* Page content */}
-      <main className="h-full overflow-auto p-4">
+      <main className="mx-auto h-full overflow-auto p-4">
         <Outlet />
       </main>
     </div>

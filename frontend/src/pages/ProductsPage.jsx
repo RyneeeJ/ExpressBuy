@@ -8,7 +8,6 @@ const ProductsPage = () => {
     console.log(error);
     return <div>There was an error fetching the products...</div>;
   }
-  console.log("products", data.data.products);
   return (
     <div>
       <ProductList products={data.data.products} />

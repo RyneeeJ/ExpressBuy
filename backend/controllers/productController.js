@@ -39,7 +39,7 @@ exports.getAllProducts = async (req, res, next) => {
     query = query.skip(skip).limit(limit);
     // Fetch query
     const products = await query.select(
-      "primaryImage name price isFeatured isInStock category brand"
+      "primaryImage name price isFeatured isInStock variants"
     );
 
     res.status(200).json({

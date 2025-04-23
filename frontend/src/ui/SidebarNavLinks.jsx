@@ -8,17 +8,17 @@ const SidebarNavLinks = ({ links, isProfilePage }) => {
   const handleCategoryClick = (path) => navigate(`/products?category=${path}`);
 
   return (
-    <ul className="menu bg-base-200 text-base-content min-h-full w-full p-0">
+    <ul className="menu bg-base-200 text-base-content text-md min-h-full w-full p-0">
       {links.map((link) => (
         <li key={link.category || link.path}>
           {isProfilePage ? (
-            <NavLink end={link.end} to={link.path}>
+            <NavLink className="py-2" end={link.end} to={link.path}>
               {link.label}
             </NavLink>
           ) : (
             <button
               onClick={() => handleCategoryClick(link.category)}
-              className={link.category === activeCategory ? "active" : ""}
+              className={`py-2 ${link.category === activeCategory ? "active" : ""}`}
             >
               {link.label}
             </button>
