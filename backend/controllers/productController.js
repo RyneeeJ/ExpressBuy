@@ -11,16 +11,21 @@ exports.getAllProducts = async (req, res, next) => {
     // SORT
     if (req.query.sort) query = query.sort(req.query.sort);
     // PAGINATE
-    const { page, limit, skip, totalPages, totalFilteredProducts } =
-      await paginateProducts({
-        reqQuery: req.query,
-        filter,
-        Model: Product,
-        queryLimit: Number(process.env.PRODUCTS_PER_PAGE),
-      });
+    const {
+      page,
+      limit,
+      skip,
+      totalPages,
+      totalFilteredQuery: totalFilteredProducts,
+    } = await paginateProducts({
+      reqQuery: req.query,
+      filter,
+      Model: Product,
+      queryLimit: Number(process.env.PRODUCTS_PER_PAGE),
+    });
 
-    if (page < 1 || isNaN(page))
-      throw new AppError("Page number must be a positive whole number", 400);
+    if (page <= 0 || isNaN(page))
+      throw new AppError("Invalid page number", 400);
 
     if (page > totalPages)
       return res.status(200).json({
@@ -48,6 +53,9 @@ exports.getAllProducts = async (req, res, next) => {
       data: {
         products,
         filter: req.query,
+        totalPages,
+        totalProducts: totalFilteredProducts,
+        limit,
       },
     });
   } catch (err) {

@@ -20,8 +20,13 @@ const useProducts = () => {
   const [searchParams] = useSearchParams();
 
   const urlCategory = searchParams.get("category");
+  const paramsPage = searchParams.get("page");
+  const page = !paramsPage ? 1 : Number(paramsPage);
+  // if params page = 0, use it.
+  // if params page = undefined, use 1
+
   const params = {
-    page: Number(searchParams.get("page")) || 1,
+    page,
     category: urlCategory && urlCategory !== "all" ? urlCategory : null,
     isFeatured: searchParams.get("isFeatured"),
     brand: searchParams.get("brand"),
@@ -40,6 +45,7 @@ const useProducts = () => {
   const { data, status, error } = useQuery({
     queryKey: ["products", cleanParams],
     queryFn: () => fetchProducts(cleanParams),
+    retry: false,
   });
 
   return { data, status, error };

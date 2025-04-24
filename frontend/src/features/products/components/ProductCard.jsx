@@ -1,9 +1,13 @@
+import { Link } from "react-router";
 import { formatCurrency } from "../../../utils/helpers";
 const ProductCard = ({ product }) => {
-  const { name, primaryImage, price, variants } = product;
+  const { name, primaryImage, price, variants, _id: id } = product;
   const numVariants = variants.length;
   return (
-    <div className="card bg-base-100 group h-full w-full max-w-96 cursor-pointer shadow-sm">
+    <Link
+      to={`/products/${id}`}
+      className="card bg-base-100 group h-full w-full max-w-96 cursor-pointer shadow-sm"
+    >
       <figure className="h-72">
         <img
           src={primaryImage}
@@ -25,7 +29,7 @@ const ProductCard = ({ product }) => {
           </div>
         ) : null}
       </div>
-    </div>
+    </Link>
   );
 };
 
