@@ -14,7 +14,9 @@ const SidebarNavLinks = ({ links, isProfilePage }) => {
   if (location.pathname === "/") activeCategory = undefined;
 
   const navigate = useNavigate();
-  const handleCategoryClick = (path) => navigate(`/products?category=${path}`);
+  const handleCategoryClick = (path) => {
+    navigate(`/products?category=${path}`);
+  };
 
   return (
     <ul className="menu bg-base-200 text-base-content text-md min-h-full w-full p-0">

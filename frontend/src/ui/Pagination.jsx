@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 
 const Pagination = ({ curPage, totalPages }) => {
   const [page, setPage] = useState(curPage);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  // keeps page state in sync with url page
+  useEffect(() => {
+    setPage(curPage);
+  }, [curPage]);
 
   const handleNextPage = () => {
     searchParams.set("page", page + 1);

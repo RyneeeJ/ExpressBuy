@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router";
 import useProducts from "../features/products/api/useProducts";
 import ProductList from "../features/products/components/ProductList";
 import Pagination from "../ui/Pagination";
@@ -6,7 +5,6 @@ import ErrorDisplay from "../ui/ErrorDisplay";
 
 const ProductsPage = () => {
   const { data, error, status } = useProducts();
-  const navigate = useNavigate();
 
   if (status === "pending") return <div>Loading products...</div>;
   if (error) {
