@@ -6,10 +6,9 @@ import SidebarNav from "./SidebarNav";
 const AppLayout = () => {
   const location = useLocation();
   const path = location.pathname;
-
-  const isSidebarVisible =
-    path === "/" || path === "/products" || path.startsWith("/profile");
   const isProfilePage = path.startsWith("/profile");
+  const isSidebarVisible =
+    path === "/" || path.startsWith("/products") || isProfilePage;
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 

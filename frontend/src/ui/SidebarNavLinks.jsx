@@ -2,16 +2,25 @@ import {
   NavLink,
   useLocation,
   useNavigate,
+  useParams,
   useSearchParams,
 } from "react-router";
 
 const SidebarNavLinks = ({ links, isProfilePage }) => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
-  let activeCategory =
-    searchParams.get("category")?.replace("&", "%26") || "all";
+  const params = useParams();
+
+  let activeCategory;
 
   if (location.pathname === "/") activeCategory = undefined;
+  else if (params.category)
+    activeCategory = params.category.replace("&", "%26");
+  else if (location.pathname === "/products") {
+    activeCategory = location.search.includes("category")
+      ? searchParams.get("category")?.replace("&", "%26")
+      : "all";
+  }
 
   const navigate = useNavigate();
   const handleCategoryClick = (path) => {
