@@ -35,6 +35,7 @@ const CompleteProductDetails = ({ product }) => {
           <ProductOperations
             variants={variants}
             setSelectedVariant={setSelectedVariant}
+            selectedVariant={selectedVariant}
           />
         </div>
       </div>

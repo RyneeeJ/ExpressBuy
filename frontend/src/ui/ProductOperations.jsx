@@ -1,11 +1,29 @@
 import { useState } from "react";
 import QuantitySelector from "./QuantitySelector";
 import VariantSelector from "./VariantSelector";
+import useAddToCart from "../features/cart/api/useAddToCart";
+import { useParams } from "react-router";
+import showToast from "../utils/toast";
 
-const ProductOperations = ({ variants, setSelectedVariant }) => {
+const ProductOperations = ({
+  variants,
+  setSelectedVariant,
+  selectedVariant,
+}) => {
   const [quantity, setQuantity] = useState(1);
-
+  const { productId } = useParams();
   const hasMultipleVariants = variants.length > 1;
+
+  const variantId = hasMultipleVariants
+    ? variants.find((v) => v.description === selectedVariant)?._id
+    : variants.at(0)._id;
+
+  //TODO: finish this after login and sign up functionality
+  // eslint-disable-next-line no-unused-vars
+  const { mutate: addItemToCart, data, isPending } = useAddToCart();
+
+  if (isPending) return <div>Adding item to your cart...</div>;
+
   const handleDecrement = () => {
     if (quantity === 1) return;
     setQuantity((q) => q - 1);
@@ -13,6 +31,14 @@ const ProductOperations = ({ variants, setSelectedVariant }) => {
   const handleIncrement = () => {
     setQuantity((q) => q + 1);
   };
+
+  const addToCart = () => {
+    if (!variantId || !quantity || !productId) {
+      return showToast("error", "Please select a variant for this product.");
+    }
+    addItemToCart({ productId, variantId, quantity });
+  };
+
   return (
     <>
       <div
@@ -32,7 +58,9 @@ const ProductOperations = ({ variants, setSelectedVariant }) => {
       </div>
       <div className="card-actions mt-4 flex justify-between">
         <button className="btn btn-soft">Add to Wishlist</button>
-        <button className="btn btn-primary">Add to Cart</button>
+        <button onClick={addToCart} className="btn btn-primary">
+          Add to Cart
+        </button>
       </div>
     </>
   );

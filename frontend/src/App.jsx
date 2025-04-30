@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "react-hot-toast";
 import AppLayout from "./ui/AppLayout";
 import HomePage from "./pages/HomePage";
 import ProductsPage from "./pages/ProductsPage";
@@ -15,6 +16,15 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <Toaster
+        toastOptions={{
+          style: {
+            padding: "0",
+            margin: "0",
+            background: "none",
+          },
+        }}
+      />
       <BrowserRouter>
         <Routes>
           <Route element={<AppLayout />}>
