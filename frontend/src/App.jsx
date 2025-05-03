@@ -11,8 +11,17 @@ import AddressesPage from "./pages/AddressesPage";
 import OrdersPage from "./pages/OrdersPage";
 import Wishlist from "./pages/WishlistPage";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
+import LoginPage from "./pages/LoginPage";
+import CartPage from "./pages/CartPage";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0,
+    },
+  },
+});
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -28,6 +37,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<AppLayout />}>
+            <Route path="login" element={<LoginPage />} />
+            <Route path="cart" element={<CartPage />} />
+
             <Route index element={<HomePage />} />
             <Route path="products" element={<ProductsPage />} />
             <Route

@@ -1,15 +1,8 @@
-import { useLocation } from "react-router";
 import Header from "./Header";
 import { useState } from "react";
-import SidebarNav from "./SidebarNav";
+import MainWindow from "./MainWindow";
 
 const AppLayout = () => {
-  const location = useLocation();
-  const path = location.pathname;
-  const isProfilePage = path.startsWith("/profile");
-  const isSidebarVisible =
-    path === "/" || path.startsWith("/products") || isProfilePage;
-
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = () => setDrawerOpen((prev) => !prev);
@@ -18,12 +11,8 @@ const AppLayout = () => {
   return (
     <div className="mx-auto flex h-screen max-w-7xl flex-col">
       <Header onToggleSidebar={toggleDrawer} />
-      <SidebarNav
-        isProfilePage={isProfilePage}
-        isSidebarVisible={isSidebarVisible}
-        isDrawerOpen={isDrawerOpen}
-        closeDrawer={closeDrawer}
-      />
+
+      <MainWindow isDrawerOpen={isDrawerOpen} closeDrawer={closeDrawer} />
     </div>
   );
 };

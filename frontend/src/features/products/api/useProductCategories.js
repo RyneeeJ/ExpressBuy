@@ -12,7 +12,7 @@ const fetchCategories = async () => {
 };
 
 const useProductCategories = () => {
-  const { data, status, error } = useQuery({
+  const { data, isPending, isFetching, status, error } = useQuery({
     queryKey: ["product-categories"],
     queryFn: fetchCategories,
     select: (data) => {
@@ -27,7 +27,7 @@ const useProductCategories = () => {
     },
   });
 
-  return { data, status, error };
+  return { data, status, isPending, isFetching, error };
 };
 
 export default useProductCategories;

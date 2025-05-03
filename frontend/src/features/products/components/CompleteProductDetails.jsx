@@ -23,11 +23,23 @@ const CompleteProductDetails = ({ product }) => {
             <h2 className="card-title text-xl">{name}</h2>
             <div className="flex items-center justify-between">
               <span className="text-3xl font-semibold tracking-wider">
-                {hasMultiplePrices
-                  ? formatCurrency(selectedVariantObject.price)
-                  : formatCurrency(price)}
+                {hasMultiplePrices &&
+                  selectedVariant &&
+                  formatCurrency(selectedVariantObject?.price)}
+                {hasMultiplePrices &&
+                  !selectedVariant &&
+                  `${formatCurrency(variants.at(0).price)} - ${formatCurrency(variants.at(-1).price)}`}
+
+                {!hasMultiplePrices && formatCurrency(price)}
               </span>
-              <span className="opacity-75">{totalStock} stocks</span>
+
+              <span className="opacity-75">
+                {variants.length > 1 &&
+                  selectedVariant &&
+                  selectedVariantObject.stock}
+                {variants.length > 1 && !selectedVariant && totalStock}
+                {variants.length === 1 && totalStock} stocks
+              </span>
             </div>
           </div>
           <p>{description}</p>

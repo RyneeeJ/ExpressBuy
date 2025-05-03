@@ -19,10 +19,8 @@ const ProductOperations = ({
     : variants.at(0)._id;
 
   //TODO: finish this after login and sign up functionality
-  // eslint-disable-next-line no-unused-vars
-  const { mutate: addItemToCart, data, isPending } = useAddToCart();
 
-  if (isPending) return <div>Adding item to your cart...</div>;
+  const { mutate: addItemToCart, isPending: isAddingToCart } = useAddToCart();
 
   const handleDecrement = () => {
     if (quantity === 1) return;
@@ -37,6 +35,7 @@ const ProductOperations = ({
       return showToast("error", "Please select a variant for this product.");
     }
     addItemToCart({ productId, variantId, quantity });
+    setQuantity(1);
   };
 
   return (
@@ -58,8 +57,12 @@ const ProductOperations = ({
       </div>
       <div className="card-actions mt-4 flex justify-between">
         <button className="btn btn-soft">Add to Wishlist</button>
-        <button onClick={addToCart} className="btn btn-primary">
-          Add to Cart
+        <button
+          onClick={addToCart}
+          disabled={isAddingToCart}
+          className="btn btn-primary"
+        >
+          {isAddingToCart ? "Adding..." : "Add to Cart"}
         </button>
       </div>
     </>

@@ -29,7 +29,7 @@ const SidebarNavLinks = ({ links, isProfilePage }) => {
 
   return (
     <ul className="menu bg-base-200 text-base-content text-md min-h-full w-full p-0">
-      {links.map((link) => (
+      {links?.map((link) => (
         <li key={link.category || link.path}>
           {isProfilePage ? (
             <NavLink className="py-2" end={link.end} to={link.path}>

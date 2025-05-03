@@ -15,8 +15,11 @@ const useAddToCart = () => {
   const { data, error, isPending, mutate } = useMutation({
     mutationFn: addToCart,
     onSuccess: (data) => {
-      console.log(data);
-      console.log("Successfully added to your cart!");
+      const { product, variant } = data.data.item;
+      showToast(
+        "success",
+        `${product.name} - ${variant.description} was added to your cart!`,
+      );
     },
     onError: (err) => {
       showToast("error", err.response.data.message);

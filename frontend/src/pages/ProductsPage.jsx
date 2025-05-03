@@ -2,15 +2,18 @@ import useProducts from "../features/products/api/useProducts";
 import ProductList from "../features/products/components/ProductList";
 import Pagination from "../ui/Pagination";
 import ErrorDisplay from "../ui/ErrorDisplay";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 const ProductsPage = () => {
-  const { data, error, status } = useProducts();
+  const { data, error, isLoading, isFetching, isPlaceholderData } =
+    useProducts();
 
-  if (status === "pending") return <div>Loading products...</div>;
   if (error) {
     const errMsg = `${error.response.data.message}: No products found for this page`;
     return <ErrorDisplay errMsg={errMsg} />;
   }
+
+  if (isLoading && !data) return <LoadingSpinner />;
 
   const { totalPages, filter, totalProducts, limit } = data.data;
   const productCategory =
@@ -47,7 +50,12 @@ const ProductsPage = () => {
             </span>
           </div>
 
-          <ProductList products={data.data.products} />
+          {/* Product list loading skeleton only */}
+          {isLoading || (isFetching && isPlaceholderData) ? (
+            <LoadingSpinner />
+          ) : (
+            <ProductList products={data.data.products} />
+          )}
         </>
       )}
     </div>
