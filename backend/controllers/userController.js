@@ -187,6 +187,7 @@ exports.addWishlist = async (req, res, next) => {
   const userId = req.user._id;
   const { productId, variantId } = req.params;
 
+  console.log(req.params);
   try {
     const productPromise = Product.findById(productId).select("variants");
     const userPromise = User.findById(userId);

@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cloudinary = require("cloudinary").v2;
+const cors = require("cors");
 
 const connectToMongo = require("./utils/connectToMongo");
 const globalErrorHandler = require("./controllers/errorController");
@@ -19,6 +20,13 @@ const app = express();
 cloudinary.config({
   secure: true,
 });
+
+app.use(
+  cors({
+    origin: "http://localhost:5173", // or your frontend origin
+    credentials: true, // VERY important for cookies to work
+  })
+);
 
 // Placed here before bodyparser because request body needs to be in raw format
 app.post(

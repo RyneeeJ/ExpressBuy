@@ -1,18 +1,15 @@
 import useProductDetails from "../features/products/api/useProductDetails";
 import CompleteProductDetails from "../features/products/components/CompleteProductDetails";
 import BreadcrumbNav from "../ui/BreadcrumbNav";
-
+import LoadingSpinner from "../ui/LoadingSpinner";
 const ProductDetailsPage = () => {
-  const { data, error, status } = useProductDetails();
+  const { data, isLoading } = useProductDetails();
   const breadcrumbLinks = [
     { label: "Home", path: "/" },
     { label: "Products", path: "/products" },
   ];
-  if (status === "pending") return <div>Loading product details...</div>;
-  if (error) {
-    console.log(error);
-    return <p>There was an error fetching product details!! 💥💥💥</p>;
-  }
+
+  if (isLoading) return <LoadingSpinner />;
   const { product } = data.data;
 
   const categoryPath = product.category

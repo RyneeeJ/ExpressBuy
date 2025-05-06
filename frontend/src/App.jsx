@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
+import { ErrorBoundary } from "react-error-boundary";
+
 import AppLayout from "./ui/AppLayout";
 import HomePage from "./pages/HomePage";
 import ProductsPage from "./pages/ProductsPage";
@@ -13,6 +15,7 @@ import Wishlist from "./pages/WishlistPage";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
 import LoginPage from "./pages/LoginPage";
 import CartPage from "./pages/CartPage";
+import ErrorFallback from "./ui/ErrorFallback";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,7 +39,13 @@ function App() {
       />
       <BrowserRouter>
         <Routes>
-          <Route element={<AppLayout />}>
+          <Route
+            element={
+              <ErrorBoundary FallbackComponent={ErrorFallback}>
+                <AppLayout />
+              </ErrorBoundary>
+            }
+          >
             <Route path="login" element={<LoginPage />} />
             <Route path="cart" element={<CartPage />} />
 
