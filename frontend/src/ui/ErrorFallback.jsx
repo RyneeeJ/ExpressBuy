@@ -11,8 +11,8 @@ const ErrorFallback = ({ error, resetErrorBoundary }) => {
       <button
         className="btn btn-neutral lg:btn-lg xl:btn-xl"
         onClick={() => {
+          navigate(-1, { replace: true });
           resetErrorBoundary();
-          navigate(-1);
         }}
       >
         Go back &rarr;
