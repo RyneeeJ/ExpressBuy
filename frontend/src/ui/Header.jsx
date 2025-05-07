@@ -5,16 +5,16 @@ import SearchBar from "./SearchBar";
 const Header = ({ onToggleSidebar }) => {
   const location = useLocation();
 
-  const menuIconNotVisible =
+  const inLoginSignupPage =
     location.pathname === "/login" || location.pathname === "/signup";
 
   return (
     <header className="flex items-center justify-between py-4">
       <Link to="/">ExpressBuy</Link>
-      <SearchBar />
+      {!inLoginSignupPage && <SearchBar />}
       <HeaderLinks />
 
-      {menuIconNotVisible ? null : (
+      {!inLoginSignupPage && (
         <div className="lg:hidden">
           <button
             onClick={onToggleSidebar}

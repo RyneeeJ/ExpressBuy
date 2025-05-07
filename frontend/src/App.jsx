@@ -14,6 +14,8 @@ import Wishlist from "./pages/WishlistPage";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
 import LoginPage from "./pages/LoginPage";
 import CartPage from "./pages/CartPage";
+import PublicRoute from "./ui/PublicRoute";
+import ProtectedRoute from "./ui/ProtectedRoute";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,8 +40,22 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<AppLayout />}>
-            <Route path="login" element={<LoginPage />} />
-            <Route path="cart" element={<CartPage />} />
+            <Route
+              path="login"
+              element={
+                <PublicRoute>
+                  <LoginPage />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="cart"
+              element={
+                <ProtectedRoute>
+                  <CartPage />
+                </ProtectedRoute>
+              }
+            />
 
             <Route index element={<HomePage />} />
             <Route path="products" element={<ProductsPage />} />
@@ -47,13 +63,45 @@ function App() {
               path="products/:category/:productId"
               element={<ProductDetailsPage />}
             />
-            <Route path="profile" element={<ProfilePage />} />
-            <Route path="profile/addresses" element={<AddressesPage />} />
-            <Route path="profile/orders" element={<OrdersPage />} />
-            <Route path="profile/wishlist" element={<Wishlist />} />
+            <Route
+              path="profile"
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="profile/addresses"
+              element={
+                <ProtectedRoute>
+                  <AddressesPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="profile/orders"
+              element={
+                <ProtectedRoute>
+                  <OrdersPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="profile/wishlist"
+              element={
+                <ProtectedRoute>
+                  <Wishlist />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="profile/change-password"
-              element={<ChangePasswordPage />}
+              element={
+                <ProtectedRoute>
+                  <ChangePasswordPage />
+                </ProtectedRoute>
+              }
             />
           </Route>
         </Routes>

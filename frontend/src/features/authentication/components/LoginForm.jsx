@@ -2,11 +2,12 @@ import { useState } from "react";
 import login from "../api/login";
 import showToast from "../../../utils/toast";
 import { useNavigate } from "react-router";
+import { useQueryClient } from "@tanstack/react-query";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errMessage, setErrMessage] = useState("");
-
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -19,6 +20,7 @@ const LoginForm = () => {
     try {
       const data = await login(formData);
       showToast("success", data.message);
+      queryClient.invalidateQueries(["optional-user"]);
       navigate("/");
     } catch (err) {
       setErrMessage(err.response.data.message);
