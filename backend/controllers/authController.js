@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 const BlacklistedToken = require("../models/blacklistedTokenModel");
 const AppError = require("../utils/appError");
+const getUserFromToken = require("../utils/getUserFromToken");
 
 const signCookieToken = (id, res) => {
   const token = jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -33,33 +34,31 @@ exports.protectRoute = (isSigningUp = false) => {
 
       if (isSigningUp && !token) return next();
 
-      if (!isSigningUp && !token)
-        throw new AppError(
-          "Unauthorized: Please login first to perform this request",
-          401
-        );
-
-      // If token is blacklisted, throw error
-      const isTokenBlacklisted = await BlacklistedToken.findOne({ token });
-      if (isTokenBlacklisted) throw new AppError("Token is invalid", 401);
-
-      // validate jwt
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-      // check if user still exists
-      const user = await User.findById(decoded.id).select("role");
-
-      if (!user)
-        throw new AppError(
-          "The owner of this token does not exist. Please log in again.",
-          401
-        );
-      // check if user has changed his password after issuing the jwt
-      if (user.passwordChangedAfterTokenIssued(decoded.iat))
-        throw new AppError(
-          "The user changed password after this token was issued. Please log in again.",
-          401
-        );
+      const { user, reason } = await getUserFromToken({
+        token,
+        isDetailed: true,
+      });
+      if (!user) {
+        switch (reason) {
+          case "blacklisted":
+            throw new AppError("Token is invalid", 401);
+          case "user_not_found":
+            throw new AppError(
+              "The owner of this token does not exist. Please log in again.",
+              401
+            );
+          case "password_changed":
+            throw new AppError(
+              "The user changed password after this token was issued. Please log in again.",
+              401
+            );
+          default:
+            throw new AppError(
+              "Unauthorized: Please login first to perform this request",
+              401
+            );
+        }
+      }
 
       // if valid, set user to req.user
       req.user = user;
@@ -68,6 +67,23 @@ exports.protectRoute = (isSigningUp = false) => {
       next(err);
     }
   };
+};
+
+exports.getCurrentUser = async (req, res, next) => {
+  try {
+    const token = req.cookies?.jwt;
+
+    const user = await getUserFromToken({ token, isDetailed: false });
+
+    res.status(200).json({
+      status: "Success",
+      data: {
+        user,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 
 exports.restrictTo = (role) => {
