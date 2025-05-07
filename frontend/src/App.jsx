@@ -16,6 +16,7 @@ import LoginPage from "./pages/LoginPage";
 import CartPage from "./pages/CartPage";
 import PublicRoute from "./ui/PublicRoute";
 import ProtectedRoute from "./ui/ProtectedRoute";
+import SignupPage from "./pages/SignupPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -48,6 +49,14 @@ function App() {
                 </PublicRoute>
               }
             />
+            <Route
+              path="signup"
+              element={
+                <PublicRoute>
+                  <SignupPage />
+                </PublicRoute>
+              }
+            ></Route>
             <Route
               path="cart"
               element={

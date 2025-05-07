@@ -5,8 +5,12 @@ import {
   useParams,
   useSearchParams,
 } from "react-router";
+import logout from "../features/authentication/api/logout";
+import { useQueryClient } from "@tanstack/react-query";
 
 const SidebarNavLinks = ({ links, isProfilePage }) => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const params = useParams();
@@ -22,9 +26,14 @@ const SidebarNavLinks = ({ links, isProfilePage }) => {
       : "all";
   }
 
-  const navigate = useNavigate();
   const handleCategoryClick = (path) => {
     navigate(`/products?category=${path}`);
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    queryClient.removeQueries({ queryKey: ["optional-user"] });
+    navigate("/login");
   };
 
   return (
@@ -45,6 +54,13 @@ const SidebarNavLinks = ({ links, isProfilePage }) => {
           )}
         </li>
       ))}
+      {isProfilePage && (
+        <li>
+          <button onClick={handleLogout} className="py-2">
+            Log out
+          </button>
+        </li>
+      )}
     </ul>
   );
 };
